@@ -1,0 +1,19 @@
+name: colab-bootstrap
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  ensurepip-independent:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Exercise real bootstrap without stdlib venv or ensurepip
+        run: python colab/bootstrap_env.py --force-bootstrap --destination "$RUNNER_TEMP/lcg-bootstrap-env"
+      - name: Verify seeded pip
+        run: '"$RUNNER_TEMP/lcg-bootstrap-env/bin/python" -m pip --version'

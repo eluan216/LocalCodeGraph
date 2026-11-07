@@ -6,13 +6,13 @@
 **Affiliation and correspondence:** To be supplied by the author  
 **Draft date:** November 7, 2026  
 **Intended venue:** Google – The Gemma 4 Developer Agent Paper Track  
-**Status:** Working resource-paper draft; real-world evaluation and competition integration are incomplete.
+**Status:** Working resource-paper draft with a completed public-development retrieval study; full-agent evaluation and competition integration remain incomplete.
 
 ## Abstract
 
 Repository navigation is a practical challenge for local software engineering agents. I present LocalCodeGraph, an offline Python toolkit for combining lexical retrieval, optional dense-vector retrieval and bounded code-graph expansion. The current implementation stores normalized snapshots in SQLite, extracts Python symbols with source locations, and searches identifiers using BM25 with naming-boundary normalization. Context selection combines rank fusion, dependency-weighted expansion, overlapping-source suppression and explicit traversal and output limits. Optional file-hash checks reject stale snippets. A comparison runner evaluates lexical and graph retrieval under matched context limits and retains per-task improvements and regressions.
 
-The release includes source code, a command-line interface, synthetic fixtures, 17 automated tests and an evaluation protocol. On the included toy fixture, source deduplication reduces context from 540 to 291 characters relative to the preceding implementation; lexical and graph localization are tied. These observations establish functional behavior, not real-world retrieval superiority or improved repair success. Integration with official competition assets, a licensed extended dataset and full-model resource measurements remain planned. The resource is intended to make subsequent offline-agent experiments easier to inspect and reproduce.
+The release includes code, a command-line interface, tests and a reproducible evaluation protocol. On all 23 public SWE-bench Lite development tasks from six repositories, graph retrieval and the configured BM25 baseline both achieve 47.8% changed-file recall at matched output caps. Exploratory symbol-proxy recall rises from 22.7% to 27.3% on 22 labeled tasks, while median context size and retrieval latency increase. The primary result is a tie; the symbol gain depends on one task. This study does not establish improved repair success or consumer-GPU memory fit. Competition integration and a licensed extended dataset remain planned.
 
 ## 1. Introduction
 
@@ -73,7 +73,7 @@ ADK skill packages, exact response-format adapters and a validated submission ar
 
 GitHub Actions verifies installation, indexing, context generation, evaluation and paired-comparison execution on Python 3.10 and 3.12. All 17 tests passed for the implementation evaluated in [4]. Tests cover transaction rollback, induced subgraphs, identifier boundaries, context limits, duplicate-source suppression, freshness rejection and dense-search ordering. Analytical cases exercise both a graph-assisted improvement and a graph-induced regression.
 
-These tests check implementation behavior. They do not estimate performance on natural issue descriptions.
+These tests check implementation behavior. Additional evaluation checks validate file-rank deduplication, empty symbol-label handling, pre-fix rename labels, failure denominators and clustered intervals. Accuracy on natural issue descriptions is measured separately below.
 
 ### 4.2 Synthetic smoke observation
 
@@ -86,15 +86,33 @@ These tests check implementation behavior. They do not estimate performance on n
 
 The context-size observation concerns one fixture and compares two implementation versions. It is not a comparison against a filesystem agent and does not measure tokens, tool calls, CPU/GPU memory or patch success.
 
-### 4.3 Planned real-world study
+### 4.3 Real-issue retrieval study
 
-The next evaluation will compare filesystem navigation, BM25, embedding-only retrieval and graph-assisted retrieval. Tasks must be pinned to pre-fix repository commits. Gold patches, test patches and localization labels must remain outside agent inputs.
+I evaluated every task in SWE-bench Lite's public development split: 23 issues across six repositories. Each graph was built from the task's exact pre-fix commit. Issue descriptions were unchanged, and reference patches were first consulted after retrieval for scoring. Dataset revision, archive checksums, code revision and predictions are recorded in [5].
 
-The current runner compares BM25 and graph-assisted retrieval with the same character budget and result cap. The lexical arm can use all k lexical seeds; the graph arm reserves approximately half the slots for expansion. Both use the same context packer. This measures the incremental retrieval policy against an already structured packer, not against an unmodified general-purpose search engine.
+The lexical arm used ten BM25 seeds without expansion. The graph arm used five seeds and the existing one-hop weighted expansion. Both used the same packer, an 8,000-character output cap, a ten-node result cap and a 30-visited-node ceiling. No dense embeddings or language model were used. The protocol was committed before scores were observed, and no retrieval parameters were subsequently tuned.
 
-The runner records Recall@k, reciprocal rank, predictions, output size, diagnostic latency and paired differences. Task-bootstrap intervals are descriptive; they do not correct for correlation between tasks from the same repository. Timing currently runs lexical retrieval before graph retrieval and can be affected by cache warming.
+| Metric | BM25 + common packer | Graph + common packer |
+| --- | ---: | ---: |
+| Changed-file recall / file hit rate | 47.83% (11/23) | 47.83% (11/23) |
+| File MRR | 0.4130 | 0.4130 |
+| Exploratory symbol-proxy recall, 22 labeled tasks | 22.73% | 27.27% |
+| Median context characters | 6,008 | 7,902 |
+| Median diagnostic retrieval latency | 12.36 ms | 12.88 ms |
 
-A full study should add repository-disjoint holdouts, repeated and randomized timing, actual tokenizer counts, resource measurements, closest feasible prior-work baselines and end-to-end patch validation with the same model and serving stack.
+All tasks completed and all changed source files were indexed. Each task had one changed source path, so file recall and hit rate coincide. Graph retrieval gained one file hit and lost one; 21 tasks tied. The primary paired difference was zero. A seeded 2,000-resample repository-cluster bootstrap interval ranged from -12.5 to +12.5 percentage points, establishing neither equivalence nor superiority.
+
+The graph arm gained a changed-file hit for pvlib-1072 by retrieving helpers, without retrieving the labeled function. It lost astroid-1333 after spending most of its budget on an irrelevant documentation configuration file. For pyvista-4315, it retrieved the changed initializer in an already localized file; this single case explains the exploratory symbol gain.
+
+Symbol labels are the smallest pre-fix functions or methods intersecting removed lines or insertion anchors. They are unaudited proxies, omit one task and need not represent all necessary context. The primary labels are reference-patch source paths.
+
+Three deterministic runs per arm used alternating order; latency is the median within each task, then across tasks. Median indexing time was 0.711 seconds and median SQLite size 11.08 MiB on the CPU runner, excluding downloads and extraction. The constant worker ru_maxrss readings are not interpreted as isolated toolkit-memory measurements.
+
+### 4.4 Interpretation and next evaluation
+
+The run demonstrates feasibility on real issue descriptions but no primary localization improvement. Median returned context was larger for graph retrieval. The lexical arm only inspected ten seeds; an oversampling baseline is needed to distinguish graph structure from candidate-pool effects.
+
+This is a small public development set, not a blind holdout. Same-file approximate edges, whole-snippet packing and truncation to the first 64 normalized unique query terms further constrain interpretation. No Gemma repair, tool-call or GPU-memory experiment was performed. The next study must use an independent frozen split, stronger lexical and prior-work baselines, audited labels, actual token counts and end-to-end patch verification.
 
 ## 5. Dataset and Release Scope
 
@@ -108,13 +126,13 @@ The Apache-2.0 license covers original project code. External repository content
 
 Python-only extraction and approximate call resolution limit graph coverage and correctness. Static dependencies can mislead retrieval. Whole-snippet packing may omit large relevant nodes. Source checking requires file reads and currently has no incremental rebuild mechanism. Character limits do not correspond exactly to model-token limits.
 
-No Gemma checkpoint has been evaluated through this toolkit. The project has not established a 16–24 GB full-agent memory fit, sub-50 ms query latency, tool-call reduction, lower peak memory or improved repair success. Those remain empirical questions.
+No Gemma checkpoint has been evaluated through this toolkit. The project has not established a 16–24 GB full-agent memory fit, tool-call reduction, lower peak memory or improved repair success. The observed millisecond retrieval timings apply only to the measured development snapshots and CPU runner.
 
-The present resource needs real-world evaluation and official-data integration to support a competitive paper. Its current evidence supports a reproducible prototype, not a state-of-the-art result.
+The present resource needs independent test evaluation and official-data integration. Its current evidence supports a reproducible prototype and a small real-issue retrieval study, not a state-of-the-art result.
 
 ## 7. Conclusion
 
-LocalCodeGraph provides an offline foundation for bounded graph-assisted repository retrieval. Its present value is an inspectable implementation, explicit resource controls and a comparison workflow that preserves negative results. Future work must establish whether these choices improve localization and repair on held-out repositories under realistic local-agent budgets.
+LocalCodeGraph provides an offline foundation for bounded graph-assisted repository retrieval. Its present value is an inspectable implementation, explicit resource controls and a comparison workflow that preserves negative results. The public-development study shows mixed retrieval effects and no primary file-localization gain. Future work must establish whether revised policies improve localization and repair on independent repositories under realistic local-agent budgets.
 
 ## References
 
@@ -122,6 +140,7 @@ LocalCodeGraph provides an offline foundation for bounded graph-assisted reposit
 2. [RepoGraph: Enhancing AI Software Engineering with Repository-level Code Graph](https://arxiv.org/abs/2410.14684).
 3. [LocAgent: Graph-Guided LLM Agents for Code Localization](https://arxiv.org/abs/2503.09089).
 4. LocalCodeGraph. [Implementation and validation record, pull request 2](https://github.com/eluan216/LocalCodeGraph/pull/2); [CI run](https://github.com/eluan216/LocalCodeGraph/actions/runs/42325201898).
-5. Google. [Gemma 4 Developer Agent Paper Track](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper).
+5. LocalCodeGraph. [SWE-bench Lite development study: results, protocol and reproduction](../evaluation/swebench-lite-dev-v1/report.md). Dataset: [SWE-bench Lite](https://huggingface.co/datasets/princeton-nlp/SWE-bench_Lite).
+6. Google. [Gemma 4 Developer Agent Paper Track](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper).
 
 See references.bib for citation records. Complete author/venue metadata should be checked against the primary publications before final typesetting.

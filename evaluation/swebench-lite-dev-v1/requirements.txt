@@ -1,0 +1,3 @@
+# Benchmark-only dependencies observed in the original run
+pyarrow==26.0.1
+unidiff==1.0.1

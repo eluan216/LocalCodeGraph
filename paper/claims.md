@@ -20,3 +20,11 @@ This ledger tracks claims in the initial concept draft. It is not a results tabl
 The manuscript date reflects the current draft, November 2026, rather than backdating work to September. Author identity, affiliation and correspondence remain author-supplied fields.
 
 Do not submit this working paper as a completed empirical study. The strongest next milestone is an audited real-world retrieval experiment; a larger corpus is useful only if its provenance and evaluation quality are credible.
+
+## Completed real-issue development study (2026-11-07)
+
+All 23 SWE-bench Lite dev tasks completed across six repositories at exact pre-fix commits. BM25 and graph each achieved 47.83% changed-file recall (11/23); the paired difference was zero, with a repository-cluster bootstrap interval of -12.5 to +12.5 percentage points.
+
+Exploratory symbol-proxy recall was 22.73% versus 27.27% on 22 labeled tasks. This gain depends on one task and does not validate the proposed 11–17 point claim. Graph context and diagnostic retrieval latency were larger.
+
+[Raw predictions and full limitations](../evaluation/swebench-lite-dev-v1/report.md). No Gemma, tool-call, GPU-memory or repair-success claims are supported by this study. The constant raw ru_maxrss readings are retained but not used as isolated toolkit-memory evidence.

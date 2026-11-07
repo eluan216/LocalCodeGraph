@@ -1,0 +1,1882 @@
+{
+  "protocol": "benchmarks/PROTOCOL.md",
+  "dataset": {
+    "dataset": "princeton-nlp/SWE-bench_Lite",
+    "revision": "6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2",
+    "split": "dev",
+    "files": [
+      {
+        "path": "data/dev-00000-of-00001.parquet",
+        "sha256": "8312f321838051849d2fa7c6ca071244733a3e90bb517ff6ca8186f722199b5c"
+      }
+    ]
+  },
+  "environment": {
+    "python": "3.12.16",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "cpu_count": 4,
+    "commit": "f1af8b9da0f8fc951f7687022d42684938199df3",
+    "run_id": "42326138785"
+  },
+  "summary": {
+    "tasks": 23,
+    "completed": 23,
+    "repositories": 6,
+    "arms": {
+      "bm25": {
+        "mean_file_recall": 0.4782608695652174,
+        "file_hit_rate": 0.4782608695652174,
+        "file_mrr": 0.41304347826086957,
+        "median_context_characters": 6008,
+        "median_retrieval_seconds": 0.012358511000002181,
+        "symbol_labeled_tasks": 22,
+        "mean_symbol_proxy_recall": 0.22727272727272727
+      },
+      "graph": {
+        "mean_file_recall": 0.4782608695652174,
+        "file_hit_rate": 0.4782608695652174,
+        "file_mrr": 0.41304347826086957,
+        "median_context_characters": 7902,
+        "median_retrieval_seconds": 0.012881738000004361,
+        "symbol_labeled_tasks": 22,
+        "mean_symbol_proxy_recall": 0.2727272727272727
+      }
+    },
+    "paired_file_recall_delta": 0,
+    "paired_task_bootstrap_95_ci": [
+      -0.13043478260869565,
+      0.13043478260869565
+    ],
+    "repository_cluster_bootstrap_95_ci": [
+      -0.125,
+      0.125
+    ],
+    "wins": 1,
+    "losses": 1,
+    "ties": 21,
+    "complete": true
+  },
+  "records": [
+    {
+      "id": "marshmallow-code__marshmallow-1343",
+      "repo": "marshmallow-code/marshmallow",
+      "base_commit": "2be2d83a1a9a6d3d9b85804f3ab545cecc409bb0",
+      "query_sha256": "80804e297cb80ecd785d28f627d865e6326170be2c8a42d4ec95f6dfe9712190",
+      "archive_sha256": "aada934a48e85bd261ef02e3afd4c34dafb307368b0725aeea2d783b690c9e8e",
+      "gold_files": [
+        "src/marshmallow/schema.py"
+      ],
+      "gold_symbols_proxy": [
+        "src/marshmallow/schema.py::BaseSchema._invoke_field_validators@863"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 1491,
+        "edges": 1771,
+        "skipped": []
+      },
+      "indexing_seconds": 0.25126234799999736,
+      "database_bytes": 4644864,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "bm25": {
+          "nodes": [
+            "tests/test_decorators.py::TestValidatesSchemaDecorator@358"
+          ],
+          "files": [
+            "tests/test_decorators.py"
+          ],
+          "characters": 7430,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.00784962800000244
+        },
+        "graph": {
+          "nodes": [
+            "tests/test_decorators.py::TestValidatesSchemaDecorator@358",
+            "setup.py::find_version@28"
+          ],
+          "files": [
+            "tests/test_decorators.py",
+            "setup.py"
+          ],
+          "characters": 7960,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.008233945000000631
+        }
+      }
+    },
+    {
+      "id": "marshmallow-code__marshmallow-1359",
+      "repo": "marshmallow-code/marshmallow",
+      "base_commit": "b40a0f4e33823e6d0f341f7e8684e359a99060d1",
+      "query_sha256": "e4caac19c9afeacc3d0660b41106012bca605a2f90ebb4756e7cc3be9b15b062",
+      "archive_sha256": "b0d63822614239fc3a5c6eceade8c0517d6934b27b033417a665de66ad1dbe24",
+      "gold_files": [
+        "src/marshmallow/fields.py"
+      ],
+      "gold_symbols_proxy": [
+        "src/marshmallow/fields.py::DateTime._bind_to_schema@1113"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 1576,
+        "edges": 1883,
+        "skipped": []
+      },
+      "indexing_seconds": 0.2679870129999955,
+      "database_bytes": 5066752,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "graph": {
+          "nodes": [
+            "src/marshmallow/schema.py::BaseSchema.Meta@311",
+            "src/marshmallow/class_registry.py::module",
+            "src/marshmallow/utils.py::_Missing@21",
+            "src/marshmallow/schema.py::Schema@1139",
+            "src/marshmallow/schema.py::SchemaOpts@187",
+            "docs/conf.py::setup@137",
+            "src/marshmallow/utils.py::_get_value_for_key@239"
+          ],
+          "files": [
+            "src/marshmallow/schema.py",
+            "src/marshmallow/class_registry.py",
+            "src/marshmallow/utils.py",
+            "src/marshmallow/schema.py",
+            "src/marshmallow/schema.py",
+            "docs/conf.py",
+            "src/marshmallow/utils.py"
+          ],
+          "characters": 7852,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.007685765999994487
+        },
+        "bm25": {
+          "nodes": [
+            "src/marshmallow/schema.py::BaseSchema.Meta@311",
+            "src/marshmallow/schema.py::BaseSchema._call_and_store@472",
+            "src/marshmallow/class_registry.py::module"
+          ],
+          "files": [
+            "src/marshmallow/schema.py",
+            "src/marshmallow/schema.py",
+            "src/marshmallow/class_registry.py"
+          ],
+          "characters": 6008,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.007244961000004935
+        }
+      }
+    },
+    {
+      "id": "pvlib__pvlib-python-1072",
+      "repo": "pvlib/pvlib-python",
+      "base_commit": "04a523fafbd61bc2e49420963b84ed8e2bd1b3cf",
+      "query_sha256": "f07d27d56ebb8157d446fe705e1e4c61fc9de31cffb1ebddc2d0b4d1baadc254",
+      "archive_sha256": "6c5da7a116f3a7e275feb1d9cc7fec00e74837e3e89190d21730f24105068bb0",
+      "gold_files": [
+        "pvlib/temperature.py"
+      ],
+      "gold_symbols_proxy": [
+        "pvlib/temperature.py::fuentes@477"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 1331,
+        "edges": 1602,
+        "skipped": []
+      },
+      "indexing_seconds": 0.5078057549999997,
+      "database_bytes": 8450048,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "bm25": {
+          "nodes": [
+            "pvlib/tests/test_temperature.py::test_fuentes@161"
+          ],
+          "files": [
+            "pvlib/tests/test_temperature.py"
+          ],
+          "characters": 1920,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.009811022000000946
+        },
+        "graph": {
+          "nodes": [
+            "pvlib/tests/test_temperature.py::test_fuentes@161",
+            "pvlib/tests/test_temperature.py::_read_pvwatts_8760@147",
+            "pvlib/temperature.py::_fuentes_hconv@446",
+            "pvlib/temperature.py::_hydraulic_diameter@472",
+            "pvlib/iotools/tmy.py::_recolumn@210",
+            "pvlib/clearsky.py::detect_clearsky.rmse@768"
+          ],
+          "files": [
+            "pvlib/tests/test_temperature.py",
+            "pvlib/tests/test_temperature.py",
+            "pvlib/temperature.py",
+            "pvlib/temperature.py",
+            "pvlib/iotools/tmy.py",
+            "pvlib/clearsky.py"
+          ],
+          "characters": 6838,
+          "visited": 16,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 0.5
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.010129213999995557
+        }
+      }
+    },
+    {
+      "id": "pvlib__pvlib-python-1154",
+      "repo": "pvlib/pvlib-python",
+      "base_commit": "0b8f24c265d76320067a5ee908a57d475cd1bb24",
+      "query_sha256": "dabe9adb51bf2a73c31aa4dde5e90d787e01fb98a25d397b02862e4970f7c879",
+      "archive_sha256": "dfb0b56375154873689eb6624c5be196650138c6060b55a0cf42a4079a51f3a5",
+      "gold_files": [
+        "pvlib/irradiance.py"
+      ],
+      "gold_symbols_proxy": [
+        "pvlib/irradiance.py::reindl@793"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 1497,
+        "edges": 1805,
+        "skipped": []
+      },
+      "indexing_seconds": 0.5628726209999968,
+      "database_bytes": 9441280,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "graph": {
+          "nodes": [
+            "pvlib/clearsky.py::ineichen@18",
+            "pvlib/irradiance.py::dni@2803"
+          ],
+          "files": [
+            "pvlib/clearsky.py",
+            "pvlib/irradiance.py"
+          ],
+          "characters": 7243,
+          "visited": 20,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 0.5
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.00746982100000082
+        },
+        "bm25": {
+          "nodes": [
+            "pvlib/clearsky.py::ineichen@18",
+            "pvlib/irradiance.py::dni@2803"
+          ],
+          "files": [
+            "pvlib/clearsky.py",
+            "pvlib/irradiance.py"
+          ],
+          "characters": 7243,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 0.5
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.007085452000012538
+        }
+      }
+    },
+    {
+      "id": "pvlib__pvlib-python-1606",
+      "repo": "pvlib/pvlib-python",
+      "base_commit": "c78b50f4337ecbe536a961336ca91a1176efc0e8",
+      "query_sha256": "57c15d2248fcbd416181049e5120ae10cf9f83d5315e124ee02756c18078dcf7",
+      "archive_sha256": "01c8f0920d4897e1a80a7e5f4737e54659154ba939ab4f5b2cd2cff4e99b01d6",
+      "gold_files": [
+        "pvlib/tools.py"
+      ],
+      "gold_symbols_proxy": [
+        "pvlib/tools.py::_golden_sect_DataFrame@302"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 1697,
+        "edges": 1964,
+        "skipped": []
+      },
+      "indexing_seconds": 0.6518422220000133,
+      "database_bytes": 10989568,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "bm25": {
+          "nodes": [
+            "pvlib/tools.py::_golden_sect_DataFrame@302",
+            "pvlib/modelchain.py::ModelChain.complete_irradiance@1231"
+          ],
+          "files": [
+            "pvlib/tools.py",
+            "pvlib/modelchain.py"
+          ],
+          "characters": 5733,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "median_retrieval_seconds": 0.009498661999998603
+        },
+        "graph": {
+          "nodes": [
+            "pvlib/tools.py::_golden_sect_DataFrame@302",
+            "pvlib/modelchain.py::ModelChain.complete_irradiance@1231",
+            "pvlib/modelchain.py::_copy@2019",
+            "pvlib/modelchain.py::_to_tuple@2059",
+            "pvlib/bifacial/infinite_sheds.py::_poa_ground_pv@316"
+          ],
+          "files": [
+            "pvlib/tools.py",
+            "pvlib/modelchain.py",
+            "pvlib/modelchain.py",
+            "pvlib/modelchain.py",
+            "pvlib/bifacial/infinite_sheds.py"
+          ],
+          "characters": 7224,
+          "visited": 21,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "median_retrieval_seconds": 0.009816614000001778
+        }
+      }
+    },
+    {
+      "id": "pvlib__pvlib-python-1707",
+      "repo": "pvlib/pvlib-python",
+      "base_commit": "40e9e978c170bdde4eeee1547729417665dbc34c",
+      "query_sha256": "7c02516a72352ed042e9a91acdf852617b5ed76813b5bf01dd7be21354d08ee5",
+      "archive_sha256": "227d2090b7080407a563136d39fe1c24443f835a7a41daadb6a01917e3bb9ea3",
+      "gold_files": [
+        "pvlib/iam.py"
+      ],
+      "gold_symbols_proxy": [
+        "pvlib/iam.py::physical@94"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 1736,
+        "edges": 2002,
+        "skipped": []
+      },
+      "indexing_seconds": 0.6925192820000063,
+      "database_bytes": 11259904,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "graph": {
+          "nodes": [
+            "pvlib/iam.py::schlick@776",
+            "pvlib/iotools/psm3.py::parse_psm3@230",
+            "pvlib/tests/test_iam.py::test_ashrae@17",
+            "pvlib/tests/test_iam.py::test_ashrae_scalar@28",
+            "pvlib/tests/test_iam.py::test_marion_diffuse_invalid@275"
+          ],
+          "files": [
+            "pvlib/iam.py",
+            "pvlib/iotools/psm3.py",
+            "pvlib/tests/test_iam.py",
+            "pvlib/tests/test_iam.py",
+            "pvlib/tests/test_iam.py"
+          ],
+          "characters": 7964,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.01064208799999733
+        },
+        "bm25": {
+          "nodes": [
+            "pvlib/iam.py::schlick@776",
+            "pvlib/iam.py::marion_integrate@633"
+          ],
+          "files": [
+            "pvlib/iam.py",
+            "pvlib/iam.py"
+          ],
+          "characters": 7072,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.010621865999993929
+        }
+      }
+    },
+    {
+      "id": "pvlib__pvlib-python-1854",
+      "repo": "pvlib/pvlib-python",
+      "base_commit": "27a3a07ebc84b11014d3753e4923902adf9a38c0",
+      "query_sha256": "ba71e95f1bb89ea8782e8789e57d9f3f5878fa8a03c94c46b00e807854e0e130",
+      "archive_sha256": "ade5ed787220e19b6fd425fdefa28ea8ad95959ba6728a222d542b6fffe16a1e",
+      "gold_files": [
+        "pvlib/pvsystem.py"
+      ],
+      "gold_symbols_proxy": [
+        "pvlib/pvsystem.py::PVSystem.__init__@194"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 1688,
+        "edges": 1971,
+        "skipped": []
+      },
+      "indexing_seconds": 0.6767479060000028,
+      "database_bytes": 11096064,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "bm25": {
+          "nodes": [
+            "pvlib/pvsystem.py::PVSystem.__init__@194",
+            "pvlib/tests/test_modelchain.py::test_inconsistent_array_params@1935",
+            "pvlib/tests/test_pvsystem.py::test_PVSystem_multi_scale_voltage_current_power@1701",
+            "docs/examples/irradiance-transposition/plot_mixed_orientation.py::module"
+          ],
+          "files": [
+            "pvlib/pvsystem.py",
+            "pvlib/tests/test_modelchain.py",
+            "pvlib/tests/test_pvsystem.py",
+            "docs/examples/irradiance-transposition/plot_mixed_orientation.py"
+          ],
+          "characters": 7250,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "median_retrieval_seconds": 0.01160939800000449
+        },
+        "graph": {
+          "nodes": [
+            "pvlib/pvsystem.py::PVSystem.__init__@194",
+            "pvlib/tests/test_modelchain.py::test_inconsistent_array_params@1935",
+            "pvlib/pvsystem.py::FixedMount@1361",
+            "pvlib/tests/test_pvsystem.py::_calcparams_correct_Python_type_check@768",
+            "pvlib/tests/test_pvsystem.py::_calcparams_correct_Python_type_numeric_type_cases@747",
+            "pvlib/tests/test_pvsystem.py::fixed_mount@2389",
+            "pvlib/tests/test_modelchain.py::acdc@1338"
+          ],
+          "files": [
+            "pvlib/pvsystem.py",
+            "pvlib/tests/test_modelchain.py",
+            "pvlib/pvsystem.py",
+            "pvlib/tests/test_pvsystem.py",
+            "pvlib/tests/test_pvsystem.py",
+            "pvlib/tests/test_pvsystem.py",
+            "pvlib/tests/test_modelchain.py"
+          ],
+          "characters": 7943,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "median_retrieval_seconds": 0.01243679899999961
+        }
+      }
+    },
+    {
+      "id": "pydicom__pydicom-1139",
+      "repo": "pydicom/pydicom",
+      "base_commit": "b9fb05c177b685bf683f7f57b2d57374eb7d882d",
+      "query_sha256": "7a03fec42e4a82536972a09ee3aad281a83f0f1c6353f33bfca3a42d63d7f326",
+      "archive_sha256": "72d6abb0e3fe88b13bef56110db7b65433a7ed161300c4dc6993e22c302156ca",
+      "gold_files": [
+        "pydicom/valuerep.py"
+      ],
+      "gold_symbols_proxy": [
+        "pydicom/valuerep.py::PersonName.__repr__@753"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 2279,
+        "edges": 2440,
+        "skipped": []
+      },
+      "indexing_seconds": 1.4092986990000043,
+      "database_bytes": 17608704,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "graph": {
+          "nodes": [
+            "pydicom/util/codify.py::main@284",
+            "pydicom/util/codify.py::code_file@236",
+            "pydicom/dataset.py::Dataset._dataset_slice@1048",
+            "pydicom/dataset.py::Dataset.__contains__@447",
+            "pydicom/dataset.py::Dataset.__dir__@596",
+            "pydicom/dataset.py::Dataset.__enter__@379",
+            "pydicom/dataset.py::Dataset.__exit__@383",
+            "pydicom/dataset.py::Dataset.__len__@1162"
+          ],
+          "files": [
+            "pydicom/util/codify.py",
+            "pydicom/util/codify.py",
+            "pydicom/dataset.py",
+            "pydicom/dataset.py",
+            "pydicom/dataset.py",
+            "pydicom/dataset.py",
+            "pydicom/dataset.py",
+            "pydicom/dataset.py"
+          ],
+          "characters": 7953,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.017479010000002404
+        },
+        "bm25": {
+          "nodes": [
+            "pydicom/util/codify.py::main@284",
+            "examples/metadata_processing/plot_anonymize.py::module"
+          ],
+          "files": [
+            "pydicom/util/codify.py",
+            "examples/metadata_processing/plot_anonymize.py"
+          ],
+          "characters": 5908,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.016896545999998125
+        }
+      }
+    },
+    {
+      "id": "pydicom__pydicom-1256",
+      "repo": "pydicom/pydicom",
+      "base_commit": "49a3da4a3d9c24d7e8427a25048a1c7d5c4f7724",
+      "query_sha256": "f061b100095a172158e0ec70463f899ad8ead6ca9b1196407e81d0b756a8ba61",
+      "archive_sha256": "5b98fa74b03d9a0d275c39180202f5cb1f8779ffd631cfa78e94a7f48a960877",
+      "gold_files": [
+        "pydicom/jsonrep.py"
+      ],
+      "gold_symbols_proxy": [
+        "pydicom/jsonrep.py::JsonDataElementConverter.get_sequence_item@189"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 2738,
+        "edges": 2979,
+        "skipped": []
+      },
+      "indexing_seconds": 1.4082963820000032,
+      "database_bytes": 19582976,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "bm25": {
+          "nodes": [
+            "pydicom/dataelem.py::DataElement.from_json@230"
+          ],
+          "files": [
+            "pydicom/dataelem.py"
+          ],
+          "characters": 1967,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.017042412999998646
+        },
+        "graph": {
+          "nodes": [
+            "pydicom/dataset.py::Dataset._dataset_slice@1140",
+            "pydicom/dataelem.py::DataElement_from_raw@717",
+            "pydicom/config.py::debug@355",
+            "pydicom/config.py::future_behavior@409",
+            "pydicom/dataset.py::Dataset.__contains__@480",
+            "pydicom/dataset.py::Dataset.__dir__@644"
+          ],
+          "files": [
+            "pydicom/dataset.py",
+            "pydicom/dataelem.py",
+            "pydicom/config.py",
+            "pydicom/config.py",
+            "pydicom/dataset.py",
+            "pydicom/dataset.py"
+          ],
+          "characters": 7992,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.017890987000001246
+        }
+      }
+    },
+    {
+      "id": "pydicom__pydicom-1413",
+      "repo": "pydicom/pydicom",
+      "base_commit": "f909c76e31f759246cec3708dadd173c5d6e84b1",
+      "query_sha256": "6222b907afefbc2d0e22570b5795068882ed9371984b912a9455c245ee76c8e1",
+      "archive_sha256": "34275860c0d19a1d27eb3fef5cabf7d129cb572558143a19545f7ec9df0e82ad",
+      "gold_files": [
+        "pydicom/dataelem.py"
+      ],
+      "gold_symbols_proxy": [
+        "pydicom/dataelem.py::DataElement.value@434"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 3037,
+        "edges": 3291,
+        "skipped": []
+      },
+      "indexing_seconds": 1.6353114039999923,
+      "database_bytes": 21929984,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "graph": {
+          "nodes": [
+            "pydicom/util/codify.py::code_sequence@140",
+            "pydicom/util/codify.py::code_dataelem@78",
+            "pydicom/util/codify.py::code_dataset@225",
+            "pydicom/util/codify.py::main@454",
+            "pydicom/util/codify.py::camel_to_underscore@38"
+          ],
+          "files": [
+            "pydicom/util/codify.py",
+            "pydicom/util/codify.py",
+            "pydicom/util/codify.py",
+            "pydicom/util/codify.py",
+            "pydicom/util/codify.py"
+          ],
+          "characters": 7923,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.025115757999998323
+        },
+        "bm25": {
+          "nodes": [
+            "pydicom/util/codify.py::code_sequence@140",
+            "pydicom/tests/test_dataelem.py::TestDataElement.test_empty_binary_values@491"
+          ],
+          "files": [
+            "pydicom/util/codify.py",
+            "pydicom/tests/test_dataelem.py"
+          ],
+          "characters": 5074,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.02374082000000044
+        }
+      }
+    },
+    {
+      "id": "pydicom__pydicom-1694",
+      "repo": "pydicom/pydicom",
+      "base_commit": "f8cf45b6c121e5a4bf4a43f71aba3bc64af3db9c",
+      "query_sha256": "b63abfe426784a568ec3663aabfa80e30e3c1b4bed3de69686e1150875cb79c2",
+      "archive_sha256": "a4758694c0a92b35da600ae8a9e4760c92533c1c83691c38e8bcd7bc3dde4379",
+      "gold_files": [
+        "pydicom/dataset.py"
+      ],
+      "gold_symbols_proxy": [
+        "pydicom/dataset.py::Dataset.to_json_dict@2460"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 3181,
+        "edges": 3458,
+        "skipped": []
+      },
+      "indexing_seconds": 1.6638601150000056,
+      "database_bytes": 22687744,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "bm25": {
+          "nodes": [
+            "pydicom/dataset.py::Dataset.to_json@2508",
+            "pydicom/dataset.py::Dataset.to_json_dict@2460",
+            "pydicom/tests/test_json.py::TestDataSetToJson.test_suppress_invalid_tags@276"
+          ],
+          "files": [
+            "pydicom/dataset.py",
+            "pydicom/dataset.py",
+            "pydicom/tests/test_json.py"
+          ],
+          "characters": 5214,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 0.5
+          },
+          "median_retrieval_seconds": 0.02247233500000334
+        },
+        "graph": {
+          "nodes": [
+            "pydicom/dataset.py::Dataset.to_json@2508",
+            "pydicom/dataset.py::Dataset.to_json_dict@2460",
+            "pydicom/dataset.py::Dataset._dataset_slice@1146",
+            "pydicom/config.py::Settings@183"
+          ],
+          "files": [
+            "pydicom/dataset.py",
+            "pydicom/dataset.py",
+            "pydicom/dataset.py",
+            "pydicom/config.py"
+          ],
+          "characters": 7999,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 0.5
+          },
+          "median_retrieval_seconds": 0.022952106999994726
+        }
+      }
+    },
+    {
+      "id": "pydicom__pydicom-901",
+      "repo": "pydicom/pydicom",
+      "base_commit": "3746878d8edf1cbda6fbcf35eec69f9ba79301ca",
+      "query_sha256": "dd82fd5840430c753ded7ca386c89ce41df5b620b389ad2860cc15fd5f177931",
+      "archive_sha256": "f6e416a0f44ab3fcfcae90591b0deb3521bd338c101e1cb5a5d25ef4d2c92a7d",
+      "gold_files": [
+        "pydicom/config.py"
+      ],
+      "gold_symbols_proxy": [
+        "pydicom/config.py::debug@113"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 1944,
+        "edges": 2069,
+        "skipped": []
+      },
+      "indexing_seconds": 0.8792074539999959,
+      "database_bytes": 11620352,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "graph": {
+          "nodes": [
+            "pydicom/config.py::debug@113",
+            "pydicom/filereader.py::read_dataset@317",
+            "pydicom/filereader.py::read_deferred_data_element@904",
+            "pydicom/filereader.py::read_sequence@389",
+            "pydicom/config.py::DS_decimal@31",
+            "pydicom/config.py::reset_data_element_callback@24",
+            "pydicom/pixel_data_handlers/pillow_handler.py::is_available@56",
+            "pydicom/pixel_data_handlers/pillow_handler.py::needs_to_convert_to_RGB@74"
+          ],
+          "files": [
+            "pydicom/config.py",
+            "pydicom/filereader.py",
+            "pydicom/filereader.py",
+            "pydicom/filereader.py",
+            "pydicom/config.py",
+            "pydicom/config.py",
+            "pydicom/pixel_data_handlers/pillow_handler.py",
+            "pydicom/pixel_data_handlers/pillow_handler.py"
+          ],
+          "characters": 7994,
+          "visited": 26,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "median_retrieval_seconds": 0.010651296000006027
+        },
+        "bm25": {
+          "nodes": [
+            "pydicom/config.py::debug@113",
+            "pydicom/pixel_data_handlers/pillow_handler.py::get_pixeldata@83"
+          ],
+          "files": [
+            "pydicom/config.py",
+            "pydicom/pixel_data_handlers/pillow_handler.py"
+          ],
+          "characters": 6024,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "median_retrieval_seconds": 0.010123331000002622
+        }
+      }
+    },
+    {
+      "id": "pylint-dev__astroid-1196",
+      "repo": "pylint-dev/astroid",
+      "base_commit": "39c2a9805970ca57093d32bbaf0e6a63e05041d8",
+      "query_sha256": "376282b578b02c1b6c4b3f9205c4129d0f4ab421969a9e21717a9fa3b7f15d9a",
+      "archive_sha256": "46831a597931a096985462350a31f55e9b8b84c4f99efdfd8d0a73ae0c41e770",
+      "gold_files": [
+        "astroid/nodes/node_classes.py"
+      ],
+      "gold_symbols_proxy": [
+        "astroid/nodes/node_classes.py::Dict.getitem@2349"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 3382,
+        "edges": 3520,
+        "skipped": [
+          {
+            "path": "tests/testdata/python3/data/invalid_encoding.py",
+            "reason": "SyntaxError"
+          }
+        ]
+      },
+      "indexing_seconds": 0.8657919679999964,
+      "database_bytes": 14843904,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "bm25": {
+          "nodes": [
+            "astroid/brain/brain_builtin_inference.py::infer_hasattr@489",
+            "astroid/nodes/scoped_nodes/scoped_nodes.py::ClassDef.igetattr@2623"
+          ],
+          "files": [
+            "astroid/brain/brain_builtin_inference.py",
+            "astroid/nodes/scoped_nodes/scoped_nodes.py"
+          ],
+          "characters": 4694,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.018770562000000268
+        },
+        "graph": {
+          "nodes": [
+            "astroid/brain/brain_builtin_inference.py::infer_hasattr@489",
+            "astroid/nodes/scoped_nodes/scoped_nodes.py::ClassDef._infer_type_call@2241",
+            "astroid/nodes/scoped_nodes/scoped_nodes.py::FunctionDef.infer_call_result@1692",
+            "astroid/brain/brain_builtin_inference.py::_infer_getattr_args@437",
+            "astroid/arguments.py::CallSite.__init__@31"
+          ],
+          "files": [
+            "astroid/brain/brain_builtin_inference.py",
+            "astroid/nodes/scoped_nodes/scoped_nodes.py",
+            "astroid/nodes/scoped_nodes/scoped_nodes.py",
+            "astroid/brain/brain_builtin_inference.py",
+            "astroid/arguments.py"
+          ],
+          "characters": 7739,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.01947048499999937
+        }
+      }
+    },
+    {
+      "id": "pylint-dev__astroid-1268",
+      "repo": "pylint-dev/astroid",
+      "base_commit": "ce5cbce5ba11cdc2f8139ade66feea1e181a7944",
+      "query_sha256": "52bda856f00f4690c0f882dc679471313c1e5751ff959afcf7087fc781c3bcc2",
+      "archive_sha256": "319b0b14e8399abcce7daac008ab0c0052b57a96d4aea0c346428039c49669d5",
+      "gold_files": [
+        "astroid/nodes/as_string.py"
+      ],
+      "gold_symbols_proxy": [],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 3270,
+        "edges": 3426,
+        "skipped": [
+          {
+            "path": "tests/testdata/python3/data/invalid_encoding.py",
+            "reason": "SyntaxError"
+          }
+        ]
+      },
+      "indexing_seconds": 0.7114997829999936,
+      "database_bytes": 13549568,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "graph": {
+          "nodes": [
+            "astroid/nodes/as_string.py::AsStringVisitor.__call__@54",
+            "astroid/nodes/as_string.py::AsStringVisitor._docs_dedent@58",
+            "astroid/nodes/as_string.py::AsStringVisitor.visit_classdef@176",
+            "tests/testdata/python3/data/package/import_package_subpackage_module.py::module",
+            "astroid/nodes/as_string.py::_import_string@647"
+          ],
+          "files": [
+            "astroid/nodes/as_string.py",
+            "astroid/nodes/as_string.py",
+            "astroid/nodes/as_string.py",
+            "tests/testdata/python3/data/package/import_package_subpackage_module.py",
+            "astroid/nodes/as_string.py"
+          ],
+          "characters": 4060,
+          "visited": 7,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": null,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.022847054999999727
+        },
+        "bm25": {
+          "nodes": [
+            "astroid/nodes/as_string.py::AsStringVisitor.__call__@54",
+            "astroid/nodes/as_string.py::AsStringVisitor._docs_dedent@58",
+            "astroid/nodes/as_string.py::AsStringVisitor.visit_classdef@176",
+            "astroid/nodes/as_string.py::AsStringVisitor.visit_module@416",
+            "astroid/nodes/as_string.py::AsStringVisitor.visit_subscript@477",
+            "tests/testdata/python3/data/package/import_package_subpackage_module.py::module"
+          ],
+          "files": [
+            "astroid/nodes/as_string.py",
+            "astroid/nodes/as_string.py",
+            "astroid/nodes/as_string.py",
+            "astroid/nodes/as_string.py",
+            "astroid/nodes/as_string.py",
+            "tests/testdata/python3/data/package/import_package_subpackage_module.py"
+          ],
+          "characters": 4624,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": null,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.022566632000007303
+        }
+      }
+    },
+    {
+      "id": "pylint-dev__astroid-1333",
+      "repo": "pylint-dev/astroid",
+      "base_commit": "d2a5b3c7b1e203fec3c7ca73c30eb1785d3d4d0a",
+      "query_sha256": "d7b811a30fa119a2afd26a2afac56d5bba45e6f4c99d2c9f2ed00c4eb073c7d3",
+      "archive_sha256": "4bd8d85daf76a72ae2fb95ea299dae85fd65775a923e2e24a156489a550c91cb",
+      "gold_files": [
+        "astroid/modutils.py"
+      ],
+      "gold_symbols_proxy": [
+        "astroid/modutils.py::_get_relative_base_path@274",
+        "astroid/modutils.py::modpath_from_file_with_callback@308"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 3300,
+        "edges": 3452,
+        "skipped": [
+          {
+            "path": "tests/testdata/python3/data/invalid_encoding.py",
+            "reason": "SyntaxError"
+          }
+        ]
+      },
+      "indexing_seconds": 0.7907691759999977,
+      "database_bytes": 14450688,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "bm25": {
+          "nodes": [
+            "script/test_bump_changelog.py::test_update_content_major@201",
+            "astroid/modutils.py::get_module_files@462",
+            "tests/testdata/python3/data/package/import_package_subpackage_module.py::module"
+          ],
+          "files": [
+            "script/test_bump_changelog.py",
+            "astroid/modutils.py",
+            "tests/testdata/python3/data/package/import_package_subpackage_module.py"
+          ],
+          "characters": 4624,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 0.5
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.01312011699999971
+        },
+        "graph": {
+          "nodes": [
+            "doc/conf.py::module"
+          ],
+          "files": [
+            "doc/conf.py"
+          ],
+          "characters": 7902,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.013671934999990754
+        }
+      }
+    },
+    {
+      "id": "pylint-dev__astroid-1866",
+      "repo": "pylint-dev/astroid",
+      "base_commit": "6cf238d089cf4b6753c94cfc089b4a47487711e5",
+      "query_sha256": "91cfff4d6fbde273acb46b4053a8a86fc0a2db88fe41e08c923f6dda01948b3a",
+      "archive_sha256": "6326823efcce22a96556daab6ce731074c42025f198f6d8dd5001d72c896aa56",
+      "gold_files": [
+        "astroid/brain/brain_builtin_inference.py"
+      ],
+      "gold_symbols_proxy": [
+        "astroid/brain/brain_builtin_inference.py::_infer_str_format_call@927"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 3486,
+        "edges": 3627,
+        "skipped": [
+          {
+            "path": "tests/testdata/python3/data/invalid_encoding.py",
+            "reason": "SyntaxError"
+          }
+        ]
+      },
+      "indexing_seconds": 0.7999662269999988,
+      "database_bytes": 15597568,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "graph": {
+          "nodes": [
+            "astroid/raw_building.py::InspectBuilder.imported_member@439",
+            "astroid/filter_statements.py::_get_filtered_node_statements@14",
+            "astroid/filter_statements.py::_get_if_statement_ancestor@34",
+            "astroid/filter_statements.py::_is_from_decorator@29",
+            "astroid/raw_building.py::attach_dummy_node@61",
+            "astroid/raw_building.py::attach_import_node@85",
+            "astroid/modutils.py::_posix_path@93",
+            "astroid/modutils.py::NoSourceFile@112",
+            "astroid/modutils.py::_cache_normalize_path@157",
+            "astroid/modutils.py::_cache_normalize_path_@153"
+          ],
+          "files": [
+            "astroid/raw_building.py",
+            "astroid/filter_statements.py",
+            "astroid/filter_statements.py",
+            "astroid/filter_statements.py",
+            "astroid/raw_building.py",
+            "astroid/raw_building.py",
+            "astroid/modutils.py",
+            "astroid/modutils.py",
+            "astroid/modutils.py",
+            "astroid/modutils.py"
+          ],
+          "characters": 4927,
+          "visited": 15,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.017202562999997895
+        },
+        "bm25": {
+          "nodes": [
+            "astroid/raw_building.py::InspectBuilder.imported_member@439",
+            "tests/unittest_inference_calls.py::test_method_dynamic_instance_attr_5@353",
+            "astroid/__init__.py::module"
+          ],
+          "files": [
+            "astroid/raw_building.py",
+            "tests/unittest_inference_calls.py",
+            "astroid/__init__.py"
+          ],
+          "characters": 7866,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.016731524999997305
+        }
+      }
+    },
+    {
+      "id": "pylint-dev__astroid-1978",
+      "repo": "pylint-dev/astroid",
+      "base_commit": "0c9ab0fe56703fa83c73e514a1020d398d23fa7f",
+      "query_sha256": "51ad593217e29a0c7ff27d7440ba5f33770f11dc1faa2d52cca73f137694bcc3",
+      "archive_sha256": "5c94d55045cf8495462aef7ae36b67ccfe324d0ee045cf7a8799cbe78189025e",
+      "gold_files": [
+        "astroid/raw_building.py"
+      ],
+      "gold_symbols_proxy": [
+        "astroid/raw_building.py::InspectBuilder.imported_member@443"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 3540,
+        "edges": 3684,
+        "skipped": [
+          {
+            "path": "tests/testdata/python3/data/invalid_encoding.py",
+            "reason": "SyntaxError"
+          }
+        ]
+      },
+      "indexing_seconds": 0.8650824409999984,
+      "database_bytes": 15941632,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "bm25": {
+          "nodes": [
+            "astroid/brain/brain_gi.py::_import_gi_module@157",
+            "astroid/interpreter/_import/util.py::is_namespace@17"
+          ],
+          "files": [
+            "astroid/brain/brain_gi.py",
+            "astroid/interpreter/_import/util.py"
+          ],
+          "characters": 6477,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.018387633000003234
+        },
+        "graph": {
+          "nodes": [
+            "astroid/brain/brain_gi.py::_import_gi_module@157",
+            "astroid/brain/brain_gi.py::_gi_build_stub@57",
+            "tests/testdata/python3/data/package/import_package_subpackage_module.py::module"
+          ],
+          "files": [
+            "astroid/brain/brain_gi.py",
+            "astroid/brain/brain_gi.py",
+            "tests/testdata/python3/data/package/import_package_subpackage_module.py"
+          ],
+          "characters": 7729,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.017484824999996817
+        }
+      }
+    },
+    {
+      "id": "pyvista__pyvista-4315",
+      "repo": "pyvista/pyvista",
+      "base_commit": "db6ee8dd4a747b8864caae36c5d05883976a3ae5",
+      "query_sha256": "78f783a4723d553591943dd5e8790ce1fddff838e900e15d9aeedc249b2ff163",
+      "archive_sha256": "1557b42ffee542b2aabf4920f2c69074fc9a58b7efdfc6e03b417fe344e026b1",
+      "gold_files": [
+        "pyvista/core/grid.py"
+      ],
+      "gold_symbols_proxy": [
+        "pyvista/core/grid.py::RectilinearGrid.__init__@126"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 5413,
+        "edges": 5676,
+        "skipped": []
+      },
+      "indexing_seconds": 1.5752802310000078,
+      "database_bytes": 28459008,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "graph": {
+          "nodes": [
+            "pyvista/utilities/errors.py::Report@276",
+            "pyvista/core/grid.py::RectilinearGrid.__init__@126",
+            "pyvista/core/grid.py::RectilinearGrid.__repr__@158",
+            "pyvista/core/grid.py::RectilinearGrid.__str__@162",
+            "pyvista/core/grid.py::RectilinearGrid._from_arrays@170",
+            "pyvista/core/grid.py::RectilinearGrid._update_dimensions@166",
+            "pyvista/core/grid.py::RectilinearGrid.cast_to_structured_grid@381"
+          ],
+          "files": [
+            "pyvista/utilities/errors.py",
+            "pyvista/core/grid.py",
+            "pyvista/core/grid.py",
+            "pyvista/core/grid.py",
+            "pyvista/core/grid.py",
+            "pyvista/core/grid.py",
+            "pyvista/core/grid.py"
+          ],
+          "characters": 7825,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 0.5
+          },
+          "symbol_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 0.5
+          },
+          "median_retrieval_seconds": 0.032893943999994235
+        },
+        "bm25": {
+          "nodes": [
+            "pyvista/utilities/errors.py::Report@276",
+            "pyvista/core/grid.py::RectilinearGrid._from_arrays@170"
+          ],
+          "files": [
+            "pyvista/utilities/errors.py",
+            "pyvista/core/grid.py"
+          ],
+          "characters": 5214,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 0.5
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.03226521999999932
+        }
+      }
+    },
+    {
+      "id": "sqlfluff__sqlfluff-1517",
+      "repo": "sqlfluff/sqlfluff",
+      "base_commit": "304a197829f98e7425a46d872ada73176137e5ae",
+      "query_sha256": "3cf151b6d14abeaed7c23424b8f9b6dc1d7b6504ceff4f95d7cd9312d86e0bcd",
+      "archive_sha256": "cfa616052a26e3cba3e505608875e0e408ca63f8c5c8aafc30c5a8d38f3ef227",
+      "gold_files": [
+        "src/sqlfluff/core/parser/helpers.py"
+      ],
+      "gold_symbols_proxy": [
+        "src/sqlfluff/core/parser/helpers.py::check_still_complete@21"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 1829,
+        "edges": 1773,
+        "skipped": []
+      },
+      "indexing_seconds": 0.5695223439999921,
+      "database_bytes": 10616832,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "bm25": {
+          "nodes": [
+            "src/sqlfluff/cli/commands.py::lint@307",
+            "src/sqlfluff/cli/commands.py::get_linter_and_formatter@205"
+          ],
+          "files": [
+            "src/sqlfluff/cli/commands.py",
+            "src/sqlfluff/cli/commands.py"
+          ],
+          "characters": 6079,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.010541580999998246
+        },
+        "graph": {
+          "nodes": [
+            "src/sqlfluff/cli/commands.py::lint@307",
+            "src/sqlfluff/cli/commands.py::_completion_message@599",
+            "src/sqlfluff/cli/commands.py::get_config@191",
+            "src/sqlfluff/cli/commands.py::get_linter_and_formatter@205",
+            "setup.py::read@25",
+            "util.py::cli@22",
+            "src/sqlfluff/cli/commands.py::RedWarningsFilter@42",
+            "src/sqlfluff/cli/commands.py::cli@231"
+          ],
+          "files": [
+            "src/sqlfluff/cli/commands.py",
+            "src/sqlfluff/cli/commands.py",
+            "src/sqlfluff/cli/commands.py",
+            "src/sqlfluff/cli/commands.py",
+            "setup.py",
+            "util.py",
+            "src/sqlfluff/cli/commands.py",
+            "src/sqlfluff/cli/commands.py"
+          ],
+          "characters": 7910,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.010621450000002142
+        }
+      }
+    },
+    {
+      "id": "sqlfluff__sqlfluff-1625",
+      "repo": "sqlfluff/sqlfluff",
+      "base_commit": "14e1a23a3166b9a645a16de96f694c77a5d4abb7",
+      "query_sha256": "b432eac46f954607134de8cfc01853cf90d6dd23f7c83676974ac4b5559489f9",
+      "archive_sha256": "ab931c83c46d7dc3ec857c25e899bae0828a9826c6c781f8bf17d9be7845a4d1",
+      "gold_files": [
+        "src/sqlfluff/rules/L031.py"
+      ],
+      "gold_symbols_proxy": [
+        "src/sqlfluff/rules/L031.py::Rule_L031._lint_aliases_in_join@149"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 1868,
+        "edges": 1816,
+        "skipped": []
+      },
+      "indexing_seconds": 0.5960913720000036,
+      "database_bytes": 10809344,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "graph": {
+          "nodes": [
+            "src/sqlfluff/rules/L031.py::Rule_L031._lint_aliases_in_join@149",
+            "test/rules/std_L020_test.py::module",
+            "src/sqlfluff/rules/L031.py::Rule_L031.TableAliasInfo@105",
+            "src/sqlfluff/rules/L031.py::Rule_L031._filter_table_expressions@114",
+            "src/sqlfluff/rules/L044.py::RuleFailure@9"
+          ],
+          "files": [
+            "src/sqlfluff/rules/L031.py",
+            "test/rules/std_L020_test.py",
+            "src/sqlfluff/rules/L031.py",
+            "src/sqlfluff/rules/L031.py",
+            "src/sqlfluff/rules/L044.py"
+          ],
+          "characters": 7767,
+          "visited": 13,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "median_retrieval_seconds": 0.01129533400001037
+        },
+        "bm25": {
+          "nodes": [
+            "src/sqlfluff/rules/L031.py::Rule_L031._lint_aliases_in_join@149",
+            "src/sqlfluff/rules/L028.py::Rule_L028@9"
+          ],
+          "files": [
+            "src/sqlfluff/rules/L031.py",
+            "src/sqlfluff/rules/L028.py"
+          ],
+          "characters": 6792,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "median_retrieval_seconds": 0.011224887000011563
+        }
+      }
+    },
+    {
+      "id": "sqlfluff__sqlfluff-1733",
+      "repo": "sqlfluff/sqlfluff",
+      "base_commit": "a1579a16b1d8913d9d7c7d12add374a290bcc78c",
+      "query_sha256": "5612e58a98bd04bb9d588e5076636d4d319699d93fc61c4e0c7c07d8ec870732",
+      "archive_sha256": "90f7e384d9bf32a01f000e750fbe12ec2fcf8ac74d6f5ce89e1ada990dbac46c",
+      "gold_files": [
+        "src/sqlfluff/rules/L039.py"
+      ],
+      "gold_symbols_proxy": [
+        "src/sqlfluff/rules/L039.py::Rule_L039._eval@33"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 1939,
+        "edges": 1880,
+        "skipped": []
+      },
+      "indexing_seconds": 0.5958400630000114,
+      "database_bytes": 11284480,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "bm25": {
+          "nodes": [
+            "test/dialects/ansi_test.py::test__dialect__ansi_parse_indented_joins@204",
+            "src/sqlfluff/rules/L044.py::Rule_L044@15"
+          ],
+          "files": [
+            "test/dialects/ansi_test.py",
+            "src/sqlfluff/rules/L044.py"
+          ],
+          "characters": 7055,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.012358511000002181
+        },
+        "graph": {
+          "nodes": [
+            "test/dialects/ansi_test.py::test__dialect__ansi_parse_indented_joins@204",
+            "examples/01_basic_api_usage.py::module",
+            "test/dialects/ansi_test.py::test__dialect__ansi__file_lex@18",
+            "test/dialects/ansi_test.py::test__dialect__ansi_is_whitespace@176",
+            "test/dialects/ansi_test.py::test__dialect__ansi_multiple_semicolons@233",
+            "test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_not_match@142",
+            "test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_not_parse@166",
+            "plugins/sqlfluff-templater-dbt/test/templater_test.py::test__dbt_templated_models_do_not_raise_lint_error@206"
+          ],
+          "files": [
+            "test/dialects/ansi_test.py",
+            "examples/01_basic_api_usage.py",
+            "test/dialects/ansi_test.py",
+            "test/dialects/ansi_test.py",
+            "test/dialects/ansi_test.py",
+            "test/dialects/ansi_test.py",
+            "test/dialects/ansi_test.py",
+            "plugins/sqlfluff-templater-dbt/test/templater_test.py"
+          ],
+          "characters": 7993,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.01342185199999335
+        }
+      }
+    },
+    {
+      "id": "sqlfluff__sqlfluff-1763",
+      "repo": "sqlfluff/sqlfluff",
+      "base_commit": "a10057635e5b2559293a676486f0b730981f037a",
+      "query_sha256": "52966c82cc936539441571386228a8390f67664504a9d1d58d527fb223e8d22a",
+      "archive_sha256": "c04dcd7a1dc65f21fba4627c99b3859813da8fea948f3cced52fa7451a9c7c67",
+      "gold_files": [
+        "src/sqlfluff/core/linter/linted_file.py"
+      ],
+      "gold_symbols_proxy": [
+        "src/sqlfluff/core/linter/linted_file.py::LintedFile.persist_tree@486"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 1942,
+        "edges": 1882,
+        "skipped": []
+      },
+      "indexing_seconds": 0.6244436089999965,
+      "database_bytes": 11304960,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "graph": {
+          "nodes": [
+            "src/sqlfluff/core/rules/base.py::LintResult@49",
+            "src/sqlfluff/core/linter/linter.py::Linter.__init__@63",
+            "src/sqlfluff/core/linter/linter.py::Linter._lex_templated_file@113",
+            "src/sqlfluff/core/linter/linter.py::Linter._load_raw_file_and_config@101",
+            "src/sqlfluff/core/linter/linter.py::Linter._warn_unfixable@285",
+            "src/sqlfluff/core/linter/linter.py::Linter.extract_ignore_from_comment@333",
+            "src/sqlfluff/core/linter/linter.py::Linter.get_ruleset@83"
+          ],
+          "files": [
+            "src/sqlfluff/core/rules/base.py",
+            "src/sqlfluff/core/linter/linter.py",
+            "src/sqlfluff/core/linter/linter.py",
+            "src/sqlfluff/core/linter/linter.py",
+            "src/sqlfluff/core/linter/linter.py",
+            "src/sqlfluff/core/linter/linter.py",
+            "src/sqlfluff/core/linter/linter.py"
+          ],
+          "characters": 7977,
+          "visited": 30,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.012719701999998279
+        },
+        "bm25": {
+          "nodes": [
+            "src/sqlfluff/core/rules/base.py::LintResult@49",
+            "src/sqlfluff/cli/commands.py::lint@343"
+          ],
+          "files": [
+            "src/sqlfluff/core/rules/base.py",
+            "src/sqlfluff/cli/commands.py"
+          ],
+          "characters": 7236,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.0119833260000064
+        }
+      }
+    },
+    {
+      "id": "sqlfluff__sqlfluff-2419",
+      "repo": "sqlfluff/sqlfluff",
+      "base_commit": "f1dba0e1dd764ae72d67c3d5e1471cf14d3db030",
+      "query_sha256": "37e869fbc7be71825d3ca41798a18436ff338bfbc2026d98c43412f00619d7d0",
+      "archive_sha256": "12bf3ab845f299da0e3dc49160c6b404119455dab1e680ab2cdcedc271107677",
+      "gold_files": [
+        "src/sqlfluff/rules/L060.py"
+      ],
+      "gold_symbols_proxy": [
+        "src/sqlfluff/rules/L060.py::Rule_L060._eval@40"
+      ],
+      "unindexed_gold_files": [],
+      "index": {
+        "nodes": 2422,
+        "edges": 2363,
+        "skipped": []
+      },
+      "indexing_seconds": 0.7713012910000003,
+      "database_bytes": 14217216,
+      "process_peak_rss_kib": 139776,
+      "predictions": {
+        "bm25": {
+          "nodes": [
+            "src/sqlfluff/rules/L060.py::Rule_L060@11",
+            "src/sqlfluff/rules/L007.py::Rule_L007@8"
+          ],
+          "files": [
+            "src/sqlfluff/rules/L060.py",
+            "src/sqlfluff/rules/L007.py"
+          ],
+          "characters": 5614,
+          "visited": 10,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.01242666999999642
+        },
+        "graph": {
+          "nodes": [
+            "src/sqlfluff/rules/L060.py::Rule_L060@11",
+            "src/sqlfluff/core/rules/base.py::RuleSet.__init__@800",
+            "src/sqlfluff/core/rules/base.py::RuleSet._expand_config_rule_glob_list@898",
+            "src/sqlfluff/core/rules/base.py::RuleSet._validate_config_options@805",
+            "src/sqlfluff/core/rules/base.py::RuleSet.copy@986",
+            "src/sqlfluff/core/rules/base.py::RuleSet.get_rulelist@917",
+            "src/sqlfluff/core/rules/base.py::RuleSet.valid_rule_name_regex@834",
+            "src/sqlfluff/core/rules/base.py::RuleLoggingAdapter@45"
+          ],
+          "files": [
+            "src/sqlfluff/rules/L060.py",
+            "src/sqlfluff/core/rules/base.py",
+            "src/sqlfluff/core/rules/base.py",
+            "src/sqlfluff/core/rules/base.py",
+            "src/sqlfluff/core/rules/base.py",
+            "src/sqlfluff/core/rules/base.py",
+            "src/sqlfluff/core/rules/base.py",
+            "src/sqlfluff/core/rules/base.py"
+          ],
+          "characters": 7778,
+          "visited": 18,
+          "file_metrics": {
+            "recall": 1,
+            "hit": 1,
+            "mrr": 1
+          },
+          "symbol_metrics": {
+            "recall": 0,
+            "hit": 0,
+            "mrr": 0
+          },
+          "median_retrieval_seconds": 0.012881738000004361
+        }
+      }
+    }
+  ]
+}

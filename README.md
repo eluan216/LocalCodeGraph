@@ -97,6 +97,14 @@ The primary result is a tie, with one graph win and one loss. The symbol-proxy g
 
 [Read the full evaluation, limitations and reproduction steps](evaluation/swebench-lite-dev-v1/report.md), [inspect every prediction](evaluation/swebench-lite-dev-v1/results.json), or [view the successful run](https://github.com/eluan216/LocalCodeGraph/actions/runs/42326138785). This is a CPU retrieval study on a public development set, not a Gemma repair experiment. The next milestone is a stronger lexical oversampling baseline and an independent frozen test set.
 
+### Observed Gemma repair pilot on a free T4
+
+I ran Gemma 4 E2B with NF4 quantization on all 23 development tasks in both conditions: 46 completed attempts. Graph context produced 10 parser-accepted patches versus 4 for BM25. Ordinary application checks found one graph patch that changed source and none for BM25; two other applicable exports were no-ops.
+
+I tested the source-changing graph candidate with reference-fix and unfixed controls. The controls behaved correctly, but the generated patch failed all three bug tests. This establishes T4 feasibility for this E2B configuration and identifies unreliable patch generation as the main bottleneck. It does not establish a repair improvement or validate the 31B checkpoint.
+
+[Full T4 results, memory observations, failure analysis and controlled tests](evaluation/t4-e2b-nf4-v1/report.md).
+
 ## Design choices
 
 - I prioritize calls and references over broad containment links.

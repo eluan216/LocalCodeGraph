@@ -1,6 +1,6 @@
 # LocalCodeGraph
 
-[Run the Gemma repair pilot in Google Colab](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair.ipynb) · [Colab setup and grading instructions](colab/README.md)
+[Run the free-T4 E2B repair pilot in Google Colab](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair.ipynb) · [Colab setup and grading instructions](colab/README.md)
 
 **I'm building an offline code-retrieval toolkit that helps local coding agents find useful repository context within a fixed budget.**
 

@@ -149,7 +149,9 @@ def main():
         _, snapshot_hashes[record["instance_id"]] = load_snapshot(args.source_dir, record)
     versions = {name: importlib.metadata.version(name) for name in
                 ("torch", "transformers", "bitsandbytes", "accelerate")}
-    config = {"backend_versions": versions, "settings": SETTINGS, "model_revision": args.model_revision,
+    config = {"implementation_sha256": sha256_file(Path(__file__)),
+              "validator_sha256": sha256_file(Path(__file__).with_name("structured_edits.py")),
+              "backend_versions": versions, "settings": SETTINGS, "model_revision": args.model_revision,
               "config_sha256": sha256_file(Path(args.model_dir) / "config.json"),
               "snapshot_sha256": snapshot_hashes,
               "system_prompt": SYSTEM, "inputs_manifest": inputs_manifest, "tasks": [r["instance_id"] for r in records]}

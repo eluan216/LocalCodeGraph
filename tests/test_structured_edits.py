@@ -4,7 +4,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import unittest
-from localcodegraph.structured_edits import EditError, render_edits, validated_generation
+from localcodegraph.structured_edits import EditError, render_edits, validated_generation, load_snapshot
 from localcodegraph.repair_t4_v2 import fit_prompt, SETTINGS
 from test_repair_t4 import CharacterTokenizer, record
 
@@ -90,6 +90,21 @@ class EditTests(unittest.TestCase):
         self.assertEqual(count, 2)
         self.assertIn("validation_error", result["steps"][0])
         self.assertEqual(result["steps"][1]["runtime_error"], "GPU failure")
+
+    def test_snapshot_provenance_and_checksum(self):
+        with tempfile.TemporaryDirectory() as directory:
+            value = record()
+            snapshot = {key:value[key] for key in ("repo","base_commit","source_archive_sha256")}
+            snapshot["files"] = {"pkg/a.py":"return 1"}
+            path = Path(directory) / (value["instance_id"] + ".json")
+            path.write_text(json.dumps(snapshot))
+            files, digest = load_snapshot(directory, value)
+            self.assertEqual(files, snapshot["files"])
+            self.assertEqual(len(digest), 64)
+            snapshot["base_commit"] = "c" * 40
+            path.write_text(json.dumps(snapshot))
+            with self.assertRaises(ValueError):
+                load_snapshot(directory, value)
 
     def test_output_limit_cannot_be_accepted(self):
         result = validated_generation(lambda f: {"response": '{"edits":[]}', "output_limit":True},

@@ -1,9 +1,5 @@
 name: freeze-repair-holdout
-on:
-  pull_request:
-    paths:
-      - benchmarks/freeze_repair_holdout.py
-      - .github/workflows/freeze-repair-holdout.yml
+on: [pull_request]
 permissions:
   contents: read
 jobs:

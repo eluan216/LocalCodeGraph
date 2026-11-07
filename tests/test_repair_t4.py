@@ -4,7 +4,8 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
-from localcodegraph.repair_t4 import fit_prompt, load_records, save_attempt, export_predictions
+from localcodegraph.repair_t4 import fit_prompt, load_records, save_attempt, export_predictions, prepare_output, load_t4_model
+from unittest.mock import Mock
 
 def record():
     return {"instance_id": "owner__repo-1", "repo": "owner/repo",
@@ -62,6 +63,37 @@ class T4Tests(unittest.TestCase):
             (root / "inputs.jsonl").write_bytes(raw + b" ")
             with self.assertRaises(ValueError):
                 load_records(root / "inputs.jsonl", root / "manifest.json")
+
+    def test_loader_does_not_force_unsupported_audio_sdpa(self):
+        loader = Mock()
+        load_t4_model(loader, "local-model", "quantization", "float16")
+        kwargs = loader.from_pretrained.call_args.kwargs
+        self.assertEqual(kwargs["attn_implementation"], "eager")
+
+    def test_startup_manifest_can_be_corrected_without_deleting_history(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "run"
+            old = {"settings": {"attention": "sdpa"}, "tasks": ["example"]}
+            new = {"settings": {"attention": "eager"}, "tasks": ["example"]}
+            prepare_output(output, old, resume=False)
+            prepare_output(output, new, resume=True)
+            self.assertEqual(json.loads((output / "manifest.json").read_text()), new)
+            backups = list(output.glob("manifest.sdpa-startup.*.json"))
+            self.assertEqual(len(backups), 1)
+            self.assertEqual(json.loads(backups[0].read_text()), old)
+
+    def test_manifest_correction_refuses_existing_attempts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "run"
+            old = {"settings": {"attention": "sdpa"}}
+            new = {"settings": {"attention": "eager"}}
+            prepare_output(output, old, resume=False)
+            attempt = output / "attempts" / "completed.json"
+            attempt.write_text("preserve")
+            with self.assertRaises(ValueError):
+                prepare_output(output, new, resume=True)
+            self.assertEqual(attempt.read_text(), "preserve")
+            self.assertEqual(json.loads((output / "manifest.json").read_text()), old)
 
     def test_both_notebooks_compile_without_saved_outputs(self):
         root = Path(__file__).resolve().parents[1] / "colab"

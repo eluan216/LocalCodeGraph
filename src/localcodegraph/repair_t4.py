@@ -13,7 +13,7 @@ SETTINGS = {"model": MODEL, "quantization": "bitsandbytes-nf4",
             "compute_dtype": "float16", "double_quant": True,
             "max_input_tokens": 4096, "max_issue_tokens": 1536,
             "max_new_tokens": 1024, "do_sample": False,
-            "thinking": False, "seed": 0, "attention": "sdpa",
+            "thinking": False, "seed": 0, "attention": "eager",
             "study": "t4-e2b-nf4-dev-v1"}
 
 def fit_prompt(tokenizer, record, arm):
@@ -82,6 +82,43 @@ def export_predictions(output, records):
             "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows))
     return {str(key): value for key, value in statuses.items()}
 
+def prepare_output(output, config, resume):
+    """Allow only the known SDPA startup correction before any recorded attempt."""
+    output = Path(output)
+    manifest = output / "manifest.json"
+    if not output.exists():
+        output.mkdir(parents=True)
+        (output / "attempts").mkdir()
+        manifest.write_text(json.dumps(config, indent=2) + "\n")
+        return
+    if not resume:
+        raise ValueError("output exists; use --resume to preserve earlier attempts")
+    stored = json.loads(manifest.read_text())
+    if stored == config:
+        return
+    corrected = json.loads(json.dumps(stored))
+    old_attention = corrected.get("settings", {}).get("attention")
+    corrected.get("settings", {})["attention"] = "eager"
+    attempts = output / "attempts"
+    recorded = attempts.exists() and any(attempts.iterdir())
+    predictions = any(p.stat().st_size for p in output.glob("predictions.*.jsonl"))
+    if old_attention != "sdpa" or corrected != config or recorded or predictions:
+        raise ValueError("existing experiment differs or has attempts; use a separate output directory")
+    backup = output / f"manifest.sdpa-startup.{time.time_ns()}.json"
+    with backup.open("x") as stream:
+        stream.write(json.dumps(stored, indent=2) + "\n")
+    temporary = output / "manifest.json.tmp"
+    temporary.write_text(json.dumps(config, indent=2) + "\n")
+    temporary.replace(manifest)
+    attempts.mkdir(exist_ok=True)
+    print("Corrected startup-only SDPA manifest to eager; original preserved at", backup, flush=True)
+
+def load_t4_model(loader, model_dir, quantization, dtype):
+    # A global SDPA request also reaches Gemma4AudioModel, which rejects it.
+    return loader.from_pretrained(model_dir, local_files_only=True,
+        quantization_config=quantization, dtype=dtype, device_map={"": 0},
+        attn_implementation=SETTINGS["attention"], low_cpu_mem_usage=True)
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--inputs", required=True)
@@ -101,13 +138,7 @@ def main():
     config = {"backend_versions": versions, "settings": SETTINGS, "model_revision": args.model_revision,
               "config_sha256": sha256_file(Path(args.model_dir) / "config.json"),
               "inputs_manifest": inputs_manifest, "tasks": [r["instance_id"] for r in records]}
-    if output.exists():
-        if not args.resume or json.loads((output / "manifest.json").read_text()) != config:
-            raise ValueError("existing output differs; never overwrite or mix experiments")
-    else:
-        output.mkdir(parents=True)
-        (output / "attempts").mkdir()
-        (output / "manifest.json").write_text(json.dumps(config, indent=2) + "\n")
+    prepare_output(output, config, args.resume)
     import torch
     from transformers import AutoTokenizer, AutoModelForMultimodalLM, BitsAndBytesConfig
     if not torch.cuda.is_available():
@@ -116,9 +147,7 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(args.model_dir, local_files_only=True)
     quantization = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4",
         bnb_4bit_compute_dtype=torch.float16, bnb_4bit_use_double_quant=True)
-    model = AutoModelForMultimodalLM.from_pretrained(args.model_dir,
-        local_files_only=True, quantization_config=quantization, dtype=torch.float16,
-        device_map={"": 0}, attn_implementation="sdpa", low_cpu_mem_usage=True)
+    model = load_t4_model(AutoModelForMultimodalLM, args.model_dir, quantization, torch.float16)
     model.eval()
     for index, record in enumerate(records):
         order = ("bm25", "graph") if index % 2 == 0 else ("graph", "bm25")

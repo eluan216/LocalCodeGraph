@@ -1,0 +1,29 @@
+name: grade-t4-source-change
+on:
+  pull_request:
+    paths:
+      - 'benchmarks/grade_t4_pilot_case.py'
+      - '.github/workflows/grade-t4-case.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  controlled-grading:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install swebench==4.1.0 pyarrow==26.0.1
+      - run: docker version
+      - run: python benchmarks/grade_t4_pilot_case.py --input-dir evaluation/t4-e2b-nf4-v1 --output-dir grading-results
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: t4-single-case-grading
+          path: |
+            grading-results/
+            logs/evaluation/
+            logs/build_images/

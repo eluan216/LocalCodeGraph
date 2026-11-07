@@ -1,0 +1,25 @@
+name: audit-t4-patches
+on:
+  pull_request:
+    paths:
+      - 'benchmarks/audit_generated_patches.py'
+      - 'evaluation/t4-e2b-nf4-v1/predictions.*.jsonl'
+      - '.github/workflows/patch-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyarrow==26.0.1
+      - run: python benchmarks/audit_generated_patches.py --input-dir evaluation/t4-e2b-nf4-v1 --output audit-results/application.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: t4-patch-application-audit
+          path: audit-results/

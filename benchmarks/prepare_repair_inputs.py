@@ -19,12 +19,17 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", default="repair-inputs")
     parser.add_argument("--revision", default="6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2")
+    parser.add_argument("--holdout-manifest")
     args = parser.parse_args()
     output = Path(args.output_dir)
     output.mkdir(parents=True, exist_ok=False)
     (output / "upstream-licenses").mkdir()
     with tempfile.TemporaryDirectory() as temporary:
-        tasks, dataset = obtain_tasks(Path(temporary), args.revision)
+        if args.holdout_manifest:
+            from freeze_repair_holdout import obtain_frozen_tasks
+            tasks, dataset = obtain_frozen_tasks(Path(temporary), args.holdout_manifest)
+        else:
+            tasks, dataset = obtain_tasks(Path(temporary), args.revision)
         with (output / "inputs.jsonl").open("w", encoding="utf-8") as stream:
             for task in tasks:
                 with tempfile.TemporaryDirectory() as directory:

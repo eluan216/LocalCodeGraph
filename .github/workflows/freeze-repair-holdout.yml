@@ -1,0 +1,22 @@
+name: freeze-repair-holdout
+on:
+  pull_request:
+    paths:
+      - benchmarks/freeze_repair_holdout.py
+      - .github/workflows/freeze-repair-holdout.yml
+permissions:
+  contents: read
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install pyarrow==26.0.1
+      - run: python benchmarks/freeze_repair_holdout.py --output holdout-manifest.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frozen-repair-holdout
+          path: holdout-manifest.json

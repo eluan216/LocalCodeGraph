@@ -139,6 +139,10 @@ def main():
     if not re.fullmatch(r"[0-9a-f]{40}", args.model_revision):
         raise ValueError("model revision must be an immutable SHA")
     records, inputs_manifest = load_records(args.inputs, args.manifest)
+    if inputs_manifest["dataset"].get("split") == "test":
+        if not inputs_manifest["dataset"].get("holdout"):
+            raise ValueError("test inputs require the frozen holdout manifest")
+        SETTINGS["study"] = "t4-e2b-nf4-holdout-v1"
     output = Path(args.output_dir)
     snapshot_hashes = {}
     for record in records:

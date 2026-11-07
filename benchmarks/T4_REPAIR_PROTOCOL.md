@@ -4,7 +4,7 @@ This is a separate experiment from REPAIR_PROTOCOL.md (31B QAT). No GPU result h
 
 - Base weights: google/gemma-4-E2B-it at a recorded immutable revision.
 - Quantization: bitsandbytes NF4 with double quantization and FP16 compute. This is NOT the official W4A16 QAT checkpoint.
-- Backend: Transformers, one local GPU, SDPA attention, no vLLM, no BF16, no paid endpoint.
+- Backend: Transformers, one local GPU, eager attention, no vLLM, no BF16, no paid endpoint.
 - Same 23 public dev tasks and gold-free paired contexts as the existing preparation pipeline.
 - Same system instructions and same issue prefix in both arms; issue prefix capped at 1,536 tokens.
 - Total prompt cap: 4,096 tokens. Trim only the context further when needed; record truncation.

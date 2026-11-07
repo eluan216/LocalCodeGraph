@@ -23,7 +23,7 @@ No A100 or paid service is required by this configuration. Free GPU access/sessi
 | Base model | Gemma 4 E2B instruction-tuned |
 | Quantization | bitsandbytes NF4, double quantization |
 | Compute | FP16; no BF16 requirement |
-| Backend | Transformers + SDPA |
+| Backend | Transformers + eager attention |
 | Input cap | 4,096 tokens |
 | Shared issue-prefix cap | 1,536 tokens |
 | Output cap | 1,024 tokens |
@@ -82,3 +82,7 @@ The original large-GPU notebook is preserved as [Gemma_31B_Large_GPU.ipynb](Gemm
 - [Official E2B model](https://huggingface.co/google/gemma-4-E2B-it)
 - [Bitsandbytes hardware requirements](https://huggingface.co/docs/transformers/quantization/bitsandbytes)
 - [Colab resource limits](https://research.google.com/colaboratory/faq.html)
+
+### Audio attention startup fix
+
+The previous global SDPA setting failed during Gemma4AudioModel initialization. The loader now uses eager attention, as recommended by the Transformers error. On --resume, only an otherwise identical startup manifest with no attempts/predictions can be corrected; the original manifest is archived. Existing attempts are never rewritten or mixed with changed settings.

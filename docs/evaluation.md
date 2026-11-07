@@ -38,7 +38,13 @@ python -m localcodegraph.evaluation --db demo.sqlite --tasks examples/tasks.json
 python -m localcodegraph.evaluation --db demo.sqlite --tasks examples/tasks.jsonl --mode hybrid -k 10
 ```
 
-The current hybrid mode means lexical seeds plus graph expansion (no dense encoder). It uses half of k, rounded down with minimum one, as seeds to reserve capacity for neighbors. Both output at most k nodes. Traversal uses a deterministic bounded breadth-first policy; it is a baseline, not a learned ranker.
+The hybrid mode means lexical seeds plus graph expansion (no dense encoder). It uses half of k, rounded down with minimum one, as seeds to reserve capacity for neighbors. The lexical baseline can use all k seeds. Both use the same rank-based context packer, source-overlap suppression, max_chars budget and k result cap. Expansion is best-first with distance decay and fixed edge-type weights; these weights are heuristics, not trained parameters. k=0 returns no results.
+
+Use --mode compare --max-chars 8000 --output comparison.json to run both conditions. The report retains every per-task prediction, win, loss and tie. The paired bootstrap uses 2,000 task resamples with seed zero; its 95% percentile interval is descriptive for the supplied tasks and does not correct for within-repository correlation. One-task fixtures produce degenerate intervals and cannot support generalization.
+
+Latency in compare mode runs the baseline first and graph second in the same process, so cache warming can favor the second arm. Treat these timings as diagnostic until a randomized repeated-run timing study is added. The report records task-file SHA256, Python/platform information and stored snapshot metadata. Index creation time is excluded and must be recorded separately.
+
+The identifier tokenizer changed: reindex existing databases to populate the new search terms. Historical lexical results are not directly comparable after reindexing.
 
 JSONL tasks contain id, query, relevant_nodes. Current evaluation targets one snapshot and validates that every gold node exists. Run separately for each task base commit. The included one-task synthetic fixture is only a smoke test.
 

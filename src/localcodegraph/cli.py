@@ -20,6 +20,7 @@ def main():
     context.add_argument("query")
     context.add_argument("--max-chars", type=int, default=16000)
     context.add_argument("--hops", type=int, default=1)
+    context.add_argument("--root", help="Reject snippets whose source hash is stale")
     neighbors = commands.add_parser("neighbors")
     neighbors.add_argument("node")
     neighbors.add_argument("--edge-type")
@@ -35,7 +36,8 @@ def main():
         elif args.command == "search":
             result = store.search(args.query, args.k)
         elif args.command == "context":
-            result = context_for_task(store, args.query, max_chars=args.max_chars, hops=args.hops)
+            result = context_for_task(store, args.query, max_chars=args.max_chars, hops=args.hops,
+                                      root=args.root)
         else:
             result = store.get_code_neighbors(args.node, args.edge_type, args.limit)
     print(json.dumps(result, indent=2, ensure_ascii=False))

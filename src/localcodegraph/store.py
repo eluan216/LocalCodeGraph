@@ -30,6 +30,12 @@ def safe_path(value):
         raise ValueError("node paths must be repository-relative")
     return value
 
+def identifier_terms(text):
+    """Split snake_case, camelCase and acronym boundaries without changing source."""
+    text = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", text)
+    text = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", text)
+    return text.replace("_", " ")
+
 class GraphStore:
     def __init__(self, database):
         self.db = sqlite3.connect(database)
@@ -79,7 +85,8 @@ class GraphStore:
             self.db.execute("DELETE FROM metadata")
             self.db.executemany("INSERT INTO nodes VALUES(?,?,?,?,?,?,?,?)", normalized)
             self.db.executemany("INSERT INTO search(id,name,path,text) VALUES(?,?,?,?)",
-                                [(n[0], n[3], n[2], n[6]) for n in normalized])
+                                [(n[0], identifier_terms(n[3]), identifier_terms(n[2]),
+                                  identifier_terms(n[6])) for n in normalized])
             self.db.executemany("INSERT OR IGNORE INTO edges VALUES(?,?,?)", relations)
             self.db.executemany("INSERT INTO metadata VALUES(?,?)",
                                 [(k, json.dumps(v)) for k, v in (metadata or {}).items()])
@@ -91,7 +98,7 @@ class GraphStore:
     def search(self, query, k=10):
         """BM25 over escaped literal tokens; this is lexical, not dense search."""
         limit(k)
-        tokens = re.findall(r"\w+", query, flags=re.UNICODE)[:64]
+        tokens = list(dict.fromkeys(re.findall(r"\w+", identifier_terms(query), flags=re.UNICODE)))[:64]
         if not tokens or not k:
             return []
         expression = " OR ".join('"' + token + '"' for token in tokens)

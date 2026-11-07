@@ -18,3 +18,8 @@ jobs:
       - run: lcg --db smoke.sqlite index examples/toy_repo
       - run: lcg --db smoke.sqlite context "decode input"
       - run: python -m localcodegraph.evaluation --db smoke.sqlite --tasks examples/tasks.jsonl
+      - run: python -m localcodegraph.evaluation --db smoke.sqlite --tasks examples/tasks.jsonl --mode compare --output comparison.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: smoke-comparison-${{ matrix.python }}
+          path: comparison.json

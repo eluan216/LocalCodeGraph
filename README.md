@@ -1,5 +1,7 @@
 # LocalCodeGraph
 
+[Run the Gemma repair pilot in Google Colab](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair.ipynb) · [Colab setup and grading instructions](colab/README.md)
+
 **I'm building an offline code-retrieval toolkit that helps local coding agents find useful repository context within a fixed budget.**
 
 My goal is to make graph-assisted repository navigation practical for the Gemma 4 Developer Agent competition and useful beyond it. I combine lexical search, optional dense retrieval and bounded dependency expansion, without requiring a graph database server.

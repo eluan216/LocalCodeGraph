@@ -1,61 +1,84 @@
-# Run my Gemma repair pilot in Google Colab
+# Run my Gemma repair pilot on a free Colab T4
 
-[Open the notebook in Colab](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair.ipynb)
+[Open the T4 notebook](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair.ipynb)
 
-I use this notebook to compare one-shot Gemma patches produced from BM25 and graph context on all 23 SWE-bench Lite development tasks. This is a pilot, not a scored competition submission or a verified repair result.
+The default notebook now targets the T4 GPU available in free Colab. It uses **google/gemma-4-E2B-it with bitsandbytes NF4 quantization and FP16 compute**, without vLLM or a paid API.
 
-## What you need
-
-- A Colab GPU with at least 38,000 MiB of VRAM; select an A100-class runtime. The notebook deliberately stops on a free 16 GB T4.
-- At least 65 GiB free disk and enough runtime to download the model and complete 46 generation requests.
-- Internet for installation, source preparation and the model download. Inference runs against a local-only endpoint.
-
-Colab GPU types and availability are not guaranteed, even with paid plans. This notebook does not buy compute. [Colab FAQ](https://research.google.com/colaboratory/faq.html).
+This is a separate E2B development experiment. It does not use the 31B model or the competition's official W4A16 QAT weights. Results must be labeled E2B NF4 and cannot be presented as 31B results.
 
 ## Run it
 
-1. Open the notebook and choose the GPU runtime.
-2. Run cells in order. The initial GPU/disk checks happen before large downloads.
-3. If Hugging Face requests authentication, use Colab Secrets with the name HF_TOKEN. Never put a token into source code.
-4. Download the output ZIP before the runtime disconnects.
-5. Grade both prediction files on a separate Docker-capable host.
+1. Select Runtime → Change runtime type → T4 GPU.
+2. Run cells in order. The notebook checks for approximately 15 GiB GPU memory and initial disk space.
+3. If Hugging Face requests authentication, put HF_TOKEN in Colab Secrets, not in source code.
+4. Save the output ZIP, including partial work if interrupted.
+5. Grade generated patches separately with the official SWE-bench Docker harness.
 
-The notebook isolates model dependencies in a virtual environment, pins vLLM 0.30.0, records the immutable model revision, hashes local weight/config files, preserves errors and avoids overwriting prior outputs. CPU CI tests notebook code syntax and controller plumbing; GPU compatibility still needs an actual Colab run.
+No A100 or paid service is required by this configuration. Free GPU access/session duration still depend on Colab availability. The notebook and controller have CPU validation; actual E2B fit and speed need your T4 runtime test.
 
-## Output files
+## T4 settings
 
-- predictions.bm25.jsonl and predictions.graph.jsonl: official SWE-bench prediction fields.
-- traces.jsonl: raw model responses, completion status, usage and request hashes.
-- manifest.json: task IDs, input checksum, model revision and model-file hashes.
-- environment.txt, hardware.txt, toolkit-commit.txt and vllm.log: runtime provenance.
-- gold-free-inputs/: exact prompts/context inputs, checksum manifest and upstream license files.
+| Setting | Value |
+| --- | --- |
+| Base model | Gemma 4 E2B instruction-tuned |
+| Quantization | bitsandbytes NF4, double quantization |
+| Compute | FP16; no BF16 requirement |
+| Backend | Transformers + SDPA |
+| Input cap | 4,096 tokens |
+| Shared issue-prefix cap | 1,536 tokens |
+| Output cap | 1,024 tokens |
+| Sampling | Greedy, seed zero |
+| Population | All 23 public SWE-bench Lite dev tasks |
+| Arms | BM25 context and graph context |
 
-Patch parsing only establishes diff syntax and the pilot's path policy. It does not establish applicability, correctness or test success.
+The original source contexts are capped at 8,000 characters. The T4 prompt builder trims context further when needed to meet the token limit and records truncation. Both arms retain the same issue prefix and instructions.
 
-## Grade on a Docker-capable machine
+The installer uses an isolated virtual environment with access to Colab's existing PyTorch/CUDA packages. Resolved package versions, hardware, model revision/config hash and input checksum are recorded.
 
-Use a pinned checkout/version of the [official SWE-bench harness](https://github.com/SWE-bench/SWE-bench), record that revision and verify its CLI help before running. The documented compatibility entry point is:
+## Interruption and resume
+
+Every completed attempt is atomically checkpointed in attempts/. Prediction files are rebuilt after each attempt. Run the notebook's download cell to save partial outputs before leaving.
+
+To continue on the same runtime with the same files/settings, set RESUME=True and rerun. Existing attempts—including errors—are skipped, not retried. Changed input/model/backend-version manifests cannot be mixed into an existing run. Files can disappear when a Colab VM is deleted; resume does not recover files that were never saved.
+
+## Outputs
+
+- predictions.bm25.jsonl and predictions.graph.jsonl: SWE-bench prediction records labeled E2B NF4.
+- attempts/: individual responses, errors, input/output token counts and prompt hashes.
+- manifest.json: experiment settings, model revision/config hash, backend versions, input manifest and task IDs.
+- environment.txt, hardware.txt and toolkit-commit.txt: runtime provenance.
+- gold-free-inputs/: exact issue/context inputs and upstream license notices.
+
+PyTorch peak allocated/reserved memory is recorded per successful generation. It is not total GPU device memory. Diff parsing is not correctness verification.
+
+## Test-based grading
+
+Use the [official SWE-bench harness](https://github.com/SWE-bench/SWE-bench) on a Docker-capable host. Pin its revision and confirm the CLI flags before running:
 
 ```bash
 python -m swebench.harness.run_evaluation \
   --dataset_name princeton-nlp/SWE-bench_Lite --split dev \
   --predictions_path predictions.bm25.jsonl \
-  --max_workers 2 --run_id lcg-gemma-dev-bm25-v1
+  --max_workers 2 --run_id lcg-t4-e2b-dev-bm25-v1
 
 python -m swebench.harness.run_evaluation \
   --dataset_name princeton-nlp/SWE-bench_Lite --split dev \
   --predictions_path predictions.graph.jsonl \
-  --max_workers 2 --run_id lcg-gemma-dev-graph-v1
+  --max_workers 2 --run_id lcg-t4-e2b-dev-graph-v1
 ```
 
-Use separate new run IDs to prevent cached reports from being reused. Confirm the grader resolves the same dataset revision/base commits recorded in the input manifest; stop if they differ. Before interpreting model scores, validate gold-patch controls and genuinely unfixed-source controls. An empty-patch prediction may be skipped by the grader and is not an unfixed-source control.
+Keep the dataset/base commits aligned with the input manifest. Use unique run IDs, validate gold-patch and genuinely unfixed-source controls, and retain missing/error reports. An empty-patch skip is not an unfixed-source test control. A complete paired study needs all 23 planned tasks in both arms.
 
-Colab inference is separate from Docker test verification; this notebook does not attempt to bypass managed-runtime container restrictions. [Official evaluation guide](https://www.swebench.com/SWE-bench/guides/evaluation/).
+This is one-shot patch generation, not the multi-turn ADK competition agent. Test grading remains separate from Colab inference. No Gemma repair result has been measured yet.
 
-## Experiment boundaries
+## Archived 31B setup
 
-Both arms use the same checkpoint, issue and decoding settings. Only context differs. No reference/test patch or expected outcome is passed to Gemma. There is no best-of selection or retry loop. This is a one-shot context-to-patch experiment, not the multi-turn ADK harness.
+The original large-GPU notebook is preserved as [Gemma_31B_Large_GPU.ipynb](Gemma_31B_Large_GPU.ipynb). It is not intended for your free T4 and is not the default link.
 
-The dev set has already informed retrieval analysis. Any improvement observed here must be checked on an independent frozen test set before a general claim. No Gemma repair performance has yet been measured.
+## Sources and protocol
 
-See [the frozen repair protocol](../benchmarks/REPAIR_PROTOCOL.md).
+- [T4 experiment protocol](../benchmarks/T4_REPAIR_PROTOCOL.md)
+- [31B experiment protocol](../benchmarks/REPAIR_PROTOCOL.md)
+- [Official E2B model](https://huggingface.co/google/gemma-4-E2B-it)
+- [Bitsandbytes hardware requirements](https://huggingface.co/docs/transformers/quantization/bitsandbytes)
+- [Colab resource limits](https://research.google.com/colaboratory/faq.html)

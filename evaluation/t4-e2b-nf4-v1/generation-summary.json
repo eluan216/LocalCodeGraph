@@ -1,0 +1,115 @@
+{
+  "source": "User-provided Colab artifacts; predictions and attempt records agree",
+  "model": {
+    "backend_versions": {
+      "torch": "2.14.1+cu130",
+      "transformers": "5.22.2",
+      "bitsandbytes": "0.50.2",
+      "accelerate": "1.15.0"
+    },
+    "settings": {
+      "model": "google/gemma-4-E2B-it",
+      "quantization": "bitsandbytes-nf4",
+      "compute_dtype": "float16",
+      "double_quant": true,
+      "max_input_tokens": 4096,
+      "max_issue_tokens": 1536,
+      "max_new_tokens": 1024,
+      "do_sample": false,
+      "thinking": false,
+      "seed": 0,
+      "attention": "eager",
+      "study": "t4-e2b-nf4-dev-v1"
+    },
+    "model_revision": "4adf15748de9e1a0097b6274cee9c15836c41c37",
+    "config_sha256": "1b28f3d2c3100f6c594754b81107428bd7b822a7f48272ca681dae9d2ec38330",
+    "inputs_manifest": {
+      "dataset": {
+        "dataset": "princeton-nlp/SWE-bench_Lite",
+        "revision": "6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2",
+        "split": "dev",
+        "files": [
+          {
+            "path": "data/dev-00000-of-00001.parquet",
+            "sha256": "8312f321838051849d2fa7c6ca071244733a3e90bb517ff6ca8186f722199b5c"
+          }
+        ]
+      },
+      "tasks": 23,
+      "inputs_sha256": "ff3898c557d6bb97d6e1539047db3b61f4001e1aa81e84efe91cab856da759f4",
+      "license": "Quoted source and issues retain upstream terms.",
+      "protocol": "benchmarks/REPAIR_PROTOCOL.md"
+    },
+    "tasks": [
+      "marshmallow-code__marshmallow-1343",
+      "marshmallow-code__marshmallow-1359",
+      "pvlib__pvlib-python-1072",
+      "pvlib__pvlib-python-1154",
+      "pvlib__pvlib-python-1606",
+      "pvlib__pvlib-python-1707",
+      "pvlib__pvlib-python-1854",
+      "pydicom__pydicom-1139",
+      "pydicom__pydicom-1256",
+      "pydicom__pydicom-1413",
+      "pydicom__pydicom-1694",
+      "pydicom__pydicom-901",
+      "pylint-dev__astroid-1196",
+      "pylint-dev__astroid-1268",
+      "pylint-dev__astroid-1333",
+      "pylint-dev__astroid-1866",
+      "pylint-dev__astroid-1978",
+      "pyvista__pyvista-4315",
+      "sqlfluff__sqlfluff-1517",
+      "sqlfluff__sqlfluff-1625",
+      "sqlfluff__sqlfluff-1733",
+      "sqlfluff__sqlfluff-1763",
+      "sqlfluff__sqlfluff-2419"
+    ]
+  },
+  "toolkit_commit": "2011ec10664bec98879a36d5f7ae3e96fd2e7b8f",
+  "hardware": "Tesla T4, 15360 MiB; driver 580.82.07 / CUDA driver compatibility 13.0",
+  "arms": {
+    "bm25": {
+      "attempts": 23,
+      "status": {
+        "error": 19,
+        "patch": 4
+      },
+      "errors": {
+        "Hunk is longer than expected": 14,
+        "output hit the fixed generation limit": 2,
+        "Unexpected hunk found: @@ -205,6 +205,7 @@\n": 1,
+        "Hunk diff line expected: ```\n": 2
+      },
+      "total_generation_seconds": 830.2111489200006,
+      "median_generation_seconds": 21.77894147899997,
+      "median_input_tokens": 2118,
+      "median_output_tokens": 186,
+      "peak_pytorch_allocated_bytes": 7887803904,
+      "peak_pytorch_reserved_bytes": 8206155776,
+      "issue_truncated": 2,
+      "context_truncated": 0
+    },
+    "graph": {
+      "attempts": 23,
+      "status": {
+        "patch": 10,
+        "error": 13
+      },
+      "errors": {
+        "Hunk is longer than expected": 10,
+        "Hunk diff line expected: ```\n": 2,
+        "Unexpected hunk found: @@ -259,7 +259,7 @@\n": 1
+      },
+      "total_generation_seconds": 571.0998671770003,
+      "median_generation_seconds": 20.585568364999972,
+      "median_input_tokens": 2770,
+      "median_output_tokens": 180,
+      "peak_pytorch_allocated_bytes": 8046315008,
+      "peak_pytorch_reserved_bytes": 8340373504,
+      "issue_truncated": 2,
+      "context_truncated": 0
+    }
+  },
+  "grading": "Not test-graded; parser-accepted patches are not successful repairs."
+}

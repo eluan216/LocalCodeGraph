@@ -80,7 +80,20 @@ python -m unittest discover -s tests -v
 
 The report includes Recall@k, MRR, selected node IDs, context size, retrieval latency, paired recall differences, wins, losses, ties and a seeded task-bootstrap interval.
 
-**I have not established that LocalCodeGraph beats the official Kaggle baseline, LocAgent, RepoGraph or any leaderboard entry.** The included synthetic fixtures verify behavior; they are not a real-world benchmark. My next milestone is a pinned, audited task set followed by matched full-agent experiments.
+### Real-world development results
+
+I evaluated all 23 public SWE-bench Lite development tasks across six repositories, using each task's pre-fix commit. Both arms used the same 8,000-character and ten-node output caps.
+
+| Metric | BM25 + common packer | Graph + common packer |
+| --- | ---: | ---: |
+| Changed-file hits | 11/23 (47.8%) | 11/23 (47.8%) |
+| Exploratory symbol-proxy recall, 22 labeled tasks | 22.7% | 27.3% |
+| Median context characters | 6,008 | 7,902 |
+| Median diagnostic retrieval latency | 12.36 ms | 12.88 ms |
+
+The primary result is a tie, with one graph win and one loss. The symbol-proxy gain comes from one task; the graph arm also uses more context and is slightly slower. I have not established superiority over BM25, the official Kaggle baseline, LocAgent, RepoGraph or a leaderboard entry.
+
+[Read the full evaluation, limitations and reproduction steps](evaluation/swebench-lite-dev-v1/report.md), [inspect every prediction](evaluation/swebench-lite-dev-v1/results.json), or [view the successful run](https://github.com/eluan216/LocalCodeGraph/actions/runs/42326138785). This is a CPU retrieval study on a public development set, not a Gemma repair experiment. The next milestone is a stronger lexical oversampling baseline and an independent frozen test set.
 
 ## Design choices
 

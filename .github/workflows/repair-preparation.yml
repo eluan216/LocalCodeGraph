@@ -1,0 +1,26 @@
+name: prepare-gemma-repair-inputs
+on:
+  pull_request:
+    paths:
+      - 'benchmarks/prepare_repair_inputs.py'
+      - 'benchmarks/REPAIR_PROTOCOL.md'
+      - '.github/workflows/repair-preparation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . pyarrow==26.0.1 unidiff==1.0.1
+      - run: python -m unittest discover -s tests -v
+      - run: python benchmarks/prepare_repair_inputs.py --output-dir repair-inputs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-free-gemma-repair-inputs
+          path: repair-inputs/

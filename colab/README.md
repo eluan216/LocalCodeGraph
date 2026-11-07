@@ -1,4 +1,38 @@
-# Run my Gemma repair pilot on a free Colab T4
+# Run my structured-edit repair pilot on a free Colab T4
+
+[Open the v2 notebook](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair_v2.ipynb)
+
+My next run uses validated JSON replacements and Python-generated diffs, with one
+correction after a validation failure. It keeps the v1 model revision and token caps,
+and saves results to /content/lcg-t4-v2-run. Run all cells in order in a T4 runtime.
+The preparation cell downloads hash-verified pre-fix snapshots for offline validation.
+It never executes repository code or supplies reference fixes to the model.
+
+If the same runtime still has the v1 inputs and model, the v2 notebook reuses them.
+A changed backend or protocol cannot be resumed into an existing v2 run.
+Download the v2 ZIP after completion or interruption. Share that ZIP through Drive
+as before; it includes every response and failure. Test grading happens separately.
+
+The v1 run completed on your T4. Its graph candidate failed controlled bug tests;
+[observed results](../evaluation/t4-e2b-nf4-v1/report.md). V2 has CPU validation only
+until a new GPU run is completed. Do not rerun v1 expecting the structured-edit change.
+
+[V2 frozen protocol](../benchmarks/T4_REPAIR_V2_PROTOCOL.md). Both arms can use two
+generations, so report total tokens, latency and retries. V1-versus-v2 is a development
+comparison with changed format and retry budget, not an isolated graph improvement.
+
+## Frozen holdout
+
+[Open the 12-task holdout notebook](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair_Holdout.ipynb).
+
+The [frozen manifest](../benchmarks/repair-holdout-v1.json) selects three tasks each
+from Django, Matplotlib, scikit-learn and SymPy using task-ID hashes. These repositories
+are outside the analyzed development set. Use this only after finalizing v2; keep
+all 12 planned tasks per arm, including failures, and do not tune on the results.
+The public benchmark may have appeared in model pretraining.
+
+## Original v1 instructions
+
 
 [Open the T4 notebook](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair.ipynb)
 
@@ -14,7 +48,7 @@ This is a separate E2B development experiment. It does not use the 31B model or 
 4. Save the output ZIP, including partial work if interrupted.
 5. Grade generated patches separately with the official SWE-bench Docker harness.
 
-No A100 or paid service is required by this configuration. Free GPU access/session duration still depend on Colab availability. The notebook and controller have CPU validation; actual E2B fit and speed need your T4 runtime test.
+No A100 or paid service is required by this configuration. Free GPU access/session duration still depend on Colab availability. The notebook and controller have CPU validation; the completed v1 observations are linked above.
 
 ## T4 settings
 
@@ -69,7 +103,7 @@ python -m swebench.harness.run_evaluation \
 
 Keep the dataset/base commits aligned with the input manifest. Use unique run IDs, validate gold-patch and genuinely unfixed-source controls, and retain missing/error reports. An empty-patch skip is not an unfixed-source test control. A complete paired study needs all 23 planned tasks in both arms.
 
-This is one-shot patch generation, not the multi-turn ADK competition agent. Test grading remains separate from Colab inference. No Gemma repair result has been measured yet.
+This is one-shot patch generation, not the multi-turn ADK competition agent. Test grading remains separate from Colab inference. The completed v1 pilot and its negative single-case test result are linked above.
 
 ## Archived 31B setup
 

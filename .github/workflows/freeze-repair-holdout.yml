@@ -1,0 +1,24 @@
+name: freeze-repair-holdout
+on: [pull_request]
+permissions:
+  contents: read
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e . pyarrow==26.0.1
+      - run: python benchmarks/freeze_repair_holdout.py --output holdout-manifest.json
+      - run: diff -u benchmarks/repair-holdout-v1.json holdout-manifest.json
+      - run: python benchmarks/prepare_repair_inputs.py --holdout-manifest holdout-manifest.json --output-dir holdout-inputs
+      - run: python benchmarks/prepare_edit_snapshots.py --inputs holdout-inputs/inputs.jsonl --manifest holdout-inputs/manifest.json --output-dir holdout-sources
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frozen-repair-holdout
+          path: |
+            holdout-manifest.json
+            holdout-inputs/
+            holdout-sources/manifest.json

@@ -47,15 +47,23 @@ def main():
             with log_path.open("w") as log:
                 process = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT,
                                          text=True, timeout=1500)
-            report = Path("logs/evaluation") / run_id / model_name / INSTANCE / "report.json"
+            matches = [p for p in Path("logs").rglob("report.json")
+                       if run_id in str(p) and INSTANCE in str(p)]
+            report = matches[0] if len(matches) == 1 else output / "missing-report.json"
             test_log = report.parent / "test_output.txt"
             statuses[label] = {"exit_code": process.returncode,
                               "report": json.loads(report.read_text()) if report.exists() else None,
-                              "test_output_tail": test_log.read_text()[-6000:] if test_log.exists() else None,
+                              "test_output_head": test_log.read_text()[:10000] if test_log.exists() else None,
+                              "test_output_tail": test_log.read_text()[-10000:] if test_log.exists() else None,
                               "log_tail": log_path.read_text()[-4000:]}
         except Exception as error:
             statuses[label] = {"error": str(error)}
         (output / "status.json").write_text(json.dumps(statuses, indent=2))
+        case_report = statuses[label].get("report") or {}
+        resolved = case_report.get(INSTANCE, {}).get("resolved")
+        if (label == "gold" and resolved is not True) or (label == "unfixed" and resolved is not False):
+            print("Control validation failed; stopping before model grading.", flush=True)
+            break
     result = {"instance_id": INSTANCE, "dataset": dataset, "harness": "swebench==4.1.0",
               "scope": "Single-case controlled grading, not a complete 23-task repair score",
               "cases": statuses}

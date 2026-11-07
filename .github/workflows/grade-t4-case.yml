@@ -25,5 +25,5 @@ jobs:
           name: t4-single-case-grading
           path: |
             grading-results/
-            logs/evaluation/
+            logs/
             logs/build_images/

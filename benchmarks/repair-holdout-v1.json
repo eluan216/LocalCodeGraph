@@ -1,0 +1,87 @@
+{
+  "study": "t4-e2b-nf4-holdout-v1",
+  "dataset": {
+    "dataset": "princeton-nlp/SWE-bench_Lite",
+    "revision": "6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2",
+    "split": "test",
+    "files": [
+      {
+        "path": "data/test-00000-of-00001.parquet",
+        "sha256": "7a21f37b8bc179c7db5beeb14e88ac538ba283455c776e6b2535bbfb6e3551b4"
+      }
+    ]
+  },
+  "selection": {
+    "salt": "localcodegraph-repair-holdout-v1",
+    "per_repository": 3,
+    "repositories": [
+      "django/django",
+      "matplotlib/matplotlib",
+      "scikit-learn/scikit-learn",
+      "sympy/sympy"
+    ],
+    "rule": "lowest SHA256(salt + instance_id), no filtering on issue, patch or model output"
+  },
+  "tasks": [
+    {
+      "instance_id": "django__django-11039",
+      "repo": "django/django",
+      "base_commit": "d5276398046ce4a102776a1e67dcac2884d80dfe"
+    },
+    {
+      "instance_id": "django__django-14608",
+      "repo": "django/django",
+      "base_commit": "7f33c1e22dbc34a7afae7967783725b10f1f13b1"
+    },
+    {
+      "instance_id": "django__django-15695",
+      "repo": "django/django",
+      "base_commit": "647480166bfe7532e8c471fef0146e3a17e6c0c9"
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-23476",
+      "repo": "matplotlib/matplotlib",
+      "base_commit": "33a0599711d26dc2b79f851c6daed4947df7c167"
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-23913",
+      "repo": "matplotlib/matplotlib",
+      "base_commit": "5c4595267ccd3daf78f5fd05693b7ecbcd575c1e"
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-25498",
+      "repo": "matplotlib/matplotlib",
+      "base_commit": "78bf53caacbb5ce0dc7aa73f07a74c99f1ed919b"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13497",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "26f690961a52946dd2f53bf0fdd4264b2ae5be90"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-14087",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "a5743ed36fbd3fbc8e351bdab16561fbfca7dfa1"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-25570",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "cd25abee0ad0ac95225d4a9be8948eff69f49690"
+    },
+    {
+      "instance_id": "sympy__sympy-13471",
+      "repo": "sympy/sympy",
+      "base_commit": "3546ac7ed78e1780c1a76929864bb33330055740"
+    },
+    {
+      "instance_id": "sympy__sympy-18199",
+      "repo": "sympy/sympy",
+      "base_commit": "ba80d1e493f21431b4bf729b3e0452cd47eb9566"
+    },
+    {
+      "instance_id": "sympy__sympy-19254",
+      "repo": "sympy/sympy",
+      "base_commit": "e0ef1da13e2ab2a77866c05246f73c871ca9388c"
+    }
+  ]
+}

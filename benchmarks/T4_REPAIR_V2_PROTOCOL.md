@@ -48,6 +48,10 @@ the renderer/application contract and is not model performance evidence.
 
 ## Next independent evaluation
 
-Choose and commit a fresh licensed task manifest, split policy and evaluation budget
-before running the model. Exclude these 23 analyzed dev tasks. Keep the manifest frozen
-and tune only on development data. No fresh holdout has been selected or evaluated yet.
+The committed repair-holdout-v1.json selects 12 public test tasks: three per repository
+from Django, Matplotlib, scikit-learn and SymPy. These repositories are absent from the
+analyzed dev set. Selection uses the lowest SHA256(salt + instance_id), without looking
+at issue content, reference patches or model outputs. Dataset shard hashes and base
+commits are pinned. Use the same finalized v2 policy, at most 48 generations total
+(12 tasks x two arms x two attempts). Do not tune or filter after observing outcomes.
+Public-data pretraining contamination is possible. No holdout model result exists yet.

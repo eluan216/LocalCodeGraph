@@ -106,6 +106,42 @@ class EditTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 load_snapshot(directory, value)
 
+    def test_checkpoint_export_audit_checks_patch_against_saved_response(self):
+        import hashlib
+        import sys
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "benchmarks"))
+        from inspect_structured_run import audit
+        from localcodegraph.repair_t4_v2 import export_predictions, save_attempt
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            value = record()
+            raw = (json.dumps(value) + "\\n").encode()
+            (root / "inputs.jsonl").write_bytes(raw)
+            metadata = {"tasks":1, "inputs_sha256":hashlib.sha256(raw).hexdigest()}
+            (root / "inputs-manifest.json").write_text(json.dumps(metadata))
+            snapshots = root / "sources"
+            snapshots.mkdir()
+            snapshot = {key:value[key] for key in ("repo","base_commit","source_archive_sha256")}
+            snapshot["files"] = {"pkg/a.py":"return 1\\n"}
+            (snapshots / (value["instance_id"] + ".json")).write_text(json.dumps(snapshot))
+            _, digest = load_snapshot(snapshots, value)
+            output = root / "run"
+            (output / "attempts").mkdir(parents=True)
+            (output / "manifest.json").write_text(json.dumps({"settings":SETTINGS,
+                "inputs_manifest":metadata, "snapshot_sha256":{value["instance_id"]:digest}}))
+            event = {"instance_id":value["instance_id"], "arm":"bm25", "status":"patch",
+                "patch":render_edits(response(), snapshot["files"]),
+                "steps":[{"response":response(), "output_tokens":10, "input_tokens":20, "seconds":1.0}]}
+            save_attempt(output, event)
+            export_predictions(output, [value])
+            result = audit(output, root / "inputs.jsonl", root / "inputs-manifest.json", snapshots)
+            self.assertEqual(result["arms"]["bm25"]["counts"]["git_apply_pass"], 1)
+            self.assertEqual(result["arms"]["graph"]["counts"]["missing"], 1)
+            event["patch"] += "corruption"
+            save_attempt(output, event)
+            with self.assertRaises(ValueError):
+                audit(output, root / "inputs.jsonl", root / "inputs-manifest.json", snapshots)
+
     def test_output_limit_cannot_be_accepted(self):
         result = validated_generation(lambda f: {"response": '{"edits":[]}', "output_limit":True},
                                       lambda r: render_edits(r, {}))

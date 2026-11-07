@@ -21,6 +21,16 @@ until a new GPU run is completed. Do not rerun v1 expecting the structured-edit 
 generations, so report total tokens, latency and retries. V1-versus-v2 is a development
 comparison with changed format and retry budget, not an isolated graph improvement.
 
+## Frozen holdout
+
+[Open the 12-task holdout notebook](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair_Holdout.ipynb).
+
+The [frozen manifest](../benchmarks/repair-holdout-v1.json) selects three tasks each
+from Django, Matplotlib, scikit-learn and SymPy using task-ID hashes. These repositories
+are outside the analyzed development set. Use this only after finalizing v2; keep
+all 12 planned tasks per arm, including failures, and do not tune on the results.
+The public benchmark may have appeared in model pretraining.
+
 ## Original v1 instructions
 
 

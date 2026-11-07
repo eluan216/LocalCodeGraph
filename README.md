@@ -1,6 +1,6 @@
 # LocalCodeGraph
 
-[Run the free-T4 E2B repair pilot in Google Colab](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair.ipynb) · [Colab setup and grading instructions](colab/README.md)
+[Run the validated-edit T4 v2 pilot in Google Colab](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair_v2.ipynb) · [Colab setup and grading instructions](colab/README.md)
 
 **I'm building an offline code-retrieval toolkit that helps local coding agents find useful repository context within a fixed budget.**
 
@@ -104,6 +104,18 @@ I ran Gemma 4 E2B with NF4 quantization on all 23 development tasks in both cond
 I tested the source-changing graph candidate with reference-fix and unfixed controls. The controls behaved correctly, but the generated patch failed all three bug tests. This establishes T4 feasibility for this E2B configuration and identifies unreliable patch generation as the main bottleneck. It does not establish a repair improvement or validate the 31B checkpoint.
 
 [Full T4 results, memory observations, failure analysis and controlled tests](evaluation/t4-e2b-nf4-v1/report.md).
+
+### Next repair experiment
+
+I've added a separately labeled v2 controller that asks for exact JSON replacements,
+validates them against pinned source and generates diffs in Python. It allows one
+validation retry and records both responses. A CPU export audit checks actual git
+application before download. V1 remains unchanged.
+
+[Run v2 on a free T4](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair_v2.ipynb).
+After finalizing the policy, use the [frozen 12-task repository holdout](benchmarks/repair-holdout-v1.json)
+and [holdout notebook](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair_Holdout.ipynb).
+These are ready-to-run experiments; no v2 or holdout GPU results are claimed.
 
 ## Design choices
 

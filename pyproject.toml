@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "localcodegraph"
+version = "0.1.0"
+description = "Offline, bounded repository graph retrieval"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+dependencies = []
+
+[project.optional-dependencies]
+dense = ["numpy>=1.26,<3"]
+
+[project.scripts]
+lcg = "localcodegraph.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

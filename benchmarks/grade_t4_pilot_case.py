@@ -29,6 +29,16 @@ def main():
     rows = [json.loads(line) for line in (Path(args.input_dir) / "predictions.graph.jsonl").read_text().splitlines()]
     candidate = next(r["model_patch"] for r in rows if r["instance_id"] == INSTANCE)
     cases = {"gold": task["patch"], "unfixed": MARKER_PATCH, "graph": candidate}
+    # This pre-fix project uses nose-style setup/teardown, removed in pytest 8.
+    # Pin only the test dependency; do not change project code, labels or patches.
+    wrapper = (
+        "from swebench.harness.constants.python import SPECS_PYDICOM\n"
+        "import runpy\n"
+        "for spec in SPECS_PYDICOM.values():\n"
+        "    spec['pip_packages'] = ['pytest==7.4.4' if p == 'pytest' else p "
+        "for p in spec.get('pip_packages', [])]\n"
+        "runpy.run_module('swebench.harness.run_evaluation', run_name='__main__')\n"
+    )
     statuses = {}
     for label, patch in cases.items():
         model_name = "lcg-control-" + label
@@ -36,7 +46,7 @@ def main():
         prediction.write_text(json.dumps({"instance_id": INSTANCE,
             "model_name_or_path": model_name, "model_patch": patch}) + "\n")
         run_id = "lcg-pydicom1413-" + label + "-" + os.environ.get("GITHUB_RUN_ID", "local")
-        command = [sys.executable, "-m", "swebench.harness.run_evaluation",
+        command = [sys.executable, "-c", wrapper,
             "--dataset_name", str(output / "task.json"), "--split", "dev",
             "--predictions_path", str(prediction), "--instance_ids", INSTANCE,
             "--max_workers", "1", "--namespace", "none",
@@ -53,6 +63,8 @@ def main():
             test_log = report.parent / "test_output.txt"
             statuses[label] = {"exit_code": process.returncode,
                               "report": json.loads(report.read_text()) if report.exists() else None,
+                              "test_failure_excerpt": (test_log.read_text()[max(0, test_log.read_text().find("FAILURES")):][:12000]
+                                  if test_log.exists() else None),
                               "test_output_head": test_log.read_text()[:10000] if test_log.exists() else None,
                               "test_output_tail": test_log.read_text()[-10000:] if test_log.exists() else None,
                               "log_tail": log_path.read_text()[-4000:]}
@@ -65,6 +77,8 @@ def main():
             print("Control validation failed; stopping before model grading.", flush=True)
             break
     result = {"instance_id": INSTANCE, "dataset": dataset, "harness": "swebench==4.1.0",
+              "environment_override": {"pydicom_pytest": "7.4.4",
+                  "reason": "Restore legacy nose-style setup/teardown support"},
               "scope": "Single-case controlled grading, not a complete 23-task repair score",
               "cases": statuses}
     (output / "results.json").write_text(json.dumps(result, indent=2) + "\n")

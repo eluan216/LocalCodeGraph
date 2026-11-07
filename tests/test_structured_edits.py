@@ -115,14 +115,14 @@ class EditTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             value = record()
-            raw = (json.dumps(value) + "\\n").encode()
+            raw = (json.dumps(value) + "\n").encode()
             (root / "inputs.jsonl").write_bytes(raw)
             metadata = {"tasks":1, "inputs_sha256":hashlib.sha256(raw).hexdigest()}
             (root / "inputs-manifest.json").write_text(json.dumps(metadata))
             snapshots = root / "sources"
             snapshots.mkdir()
             snapshot = {key:value[key] for key in ("repo","base_commit","source_archive_sha256")}
-            snapshot["files"] = {"pkg/a.py":"return 1\\n"}
+            snapshot["files"] = {"pkg/a.py":"return 1\n"}
             (snapshots / (value["instance_id"] + ".json")).write_text(json.dumps(snapshot))
             _, digest = load_snapshot(snapshots, value)
             output = root / "run"

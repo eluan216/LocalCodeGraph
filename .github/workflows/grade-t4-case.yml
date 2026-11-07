@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
 jobs:
   controlled-grading:
     runs-on: ubuntu-latest
@@ -16,6 +17,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Download prior control logs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 42375101822 --repo eluan216/LocalCodeGraph --name t4-single-case-grading --dir prior-control
+      - name: Inspect prior control failure
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          for path in Path("prior-control").rglob("test_output.txt"):
+              if "gold" in str(path):
+                  text = path.read_text()
+                  print("PRIOR_CONTROL", path)
+                  for line in text.splitlines():
+                      if "pytest-" in line or line.startswith("E ") or "AttributeError" in line:
+                          print(line)
+          PY
       - run: python -m pip install swebench==4.1.0 pyarrow==26.0.1
       - run: docker version
       - run: python benchmarks/grade_t4_pilot_case.py --input-dir evaluation/t4-e2b-nf4-v1 --output-dir grading-results
@@ -26,4 +43,3 @@ jobs:
           path: |
             grading-results/
             logs/
-            logs/build_images/

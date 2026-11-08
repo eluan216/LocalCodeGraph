@@ -1,6 +1,6 @@
 # LocalCodeGraph
 
-[Run the validated-edit T4 v2 pilot in Google Colab](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair_v2.ipynb) · [Colab setup and grading instructions](colab/README.md)
+[Revalidate saved v2 responses on CPU before another GPU run](colab/README.md) · [Colab setup and grading instructions](colab/README.md)
 
 **I'm building an offline code-retrieval toolkit that helps local coding agents find useful repository context within a fixed budget.**
 
@@ -115,7 +115,12 @@ application before download. V1 remains unchanged.
 [Run v2 on a free T4](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair_v2.ipynb).
 After finalizing the policy, use the [frozen 12-task repository holdout](benchmarks/repair-holdout-v1.json)
 and [holdout notebook](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair_Holdout.ipynb).
-These are ready-to-run experiments; no v2 or holdout GPU results are claimed.
+The user subsequently reported all 46 v2 attempts ending in errors: 45 JSON-format
+errors and one output limit. The supplied example is fenced JSON and copies the
+schema's example path. These are reported observations; the full raw run has not
+yet been audited. [Revalidate saved outputs on CPU](colab/README.md) before another
+GPU run. A separately labeled v3 prompt removes the example path. No holdout or
+v3 model result is claimed.
 
 ## Design choices
 

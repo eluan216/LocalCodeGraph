@@ -1,4 +1,47 @@
-# Run my structured-edit repair pilot on a free Colab T4
+# Diagnose the completed v2 run before another GPU experiment
+
+The user reports 46/46 final errors: 45 rejected as JSON formatting and one output
+limit. The supplied response is valid JSON inside a code fence, but also uses the
+prompt's illustrative package/file.py path. Unwrapping the fence alone does not
+make that edit valid. Raw files have not yet been audited as a complete run.
+
+## CPU-only revalidation
+
+Keep the existing v2 output directory unchanged. Update the checkout and run:
+
+```python
+subprocess.run(["git", "-C", str(ROOT), "pull", "--ff-only"], check=True)
+subprocess.run([PYTHON, str(ROOT / "benchmarks/revalidate_structured_run.py"),
+    "--run-dir", "/content/lcg-t4-v2-run",
+    "--inputs", str(INPUTS / "inputs.jsonl"),
+    "--manifest", str(INPUTS / "manifest.json"),
+    "--source-dir", str(SOURCES),
+    "--output-dir", "/content/lcg-t4-v2-posthoc"], check=True)
+```
+
+This loads no model and uses no GPU. It accepts exactly one complete JSON code
+fence with no surrounding prose, then repeats all path, exact-source, overlap,
+no-op and Git application checks. It examines every saved step but exports only
+the final saved step. Output-limit and runtime failures remain errors.
+A newly accepted earlier response is not selected over a failed final retry.
+The post-hoc predictions and report go into a separate directory; originals are
+never overwritten. Repeating the command needs a new output directory.
+
+If the runtime was reset, restore the v2 run and inputs from the ZIP and rebuild
+source snapshots with prepare_edit_snapshots.py. No inference is required.
+Post-hoc applicability is not a repair score or the original v2 outcome.
+
+## Future grounded development run
+
+[The v3 notebook](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair_v3.ipynb)
+removes the example path and directs Gemma to copy paths and old text from the
+pre-fix source headers, rather than the issue's example code. It permits a single
+JSON fence and saves to a separate v3 directory. Do not spend more GPU time until
+the CPU revalidation results have been inspected. The frozen holdout remains
+reserved until the development policy is finalized.
+
+## Archived v2 instructions
+
 
 [Open the v2 notebook](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair_v2.ipynb)
 

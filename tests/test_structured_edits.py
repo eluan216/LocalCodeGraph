@@ -141,6 +141,70 @@ class EditTests(unittest.TestCase):
             save_attempt(output, event)
             with self.assertRaises(ValueError):
                 audit(output, root / "inputs.jsonl", root / "inputs-manifest.json", snapshots)
+            from revalidate_structured_run import revalidate
+            fence = chr(96) * 3
+            event.update(status="error", patch="", steps=[
+                {"response":fence + "json\n" + response() + "\n" + fence},
+                {"response":fence + "json\n" + response(path="package/file.py") + "\n" + fence}])
+            save_attempt(output, event)
+            original = (output / "attempts" / (value["instance_id"] + ".bm25.json")).read_bytes()
+            posthoc = root / "posthoc"
+            result = revalidate(output, snapshots, posthoc, root / "inputs.jsonl",
+                                root / "inputs-manifest.json")
+            self.assertEqual(result["records"][0]["steps"][0]["status"], "applicable")
+            self.assertEqual(result["records"][0]["final_status"], "error")
+            self.assertEqual(json.loads((posthoc / "predictions.bm25.posthoc.jsonl").read_text())["model_patch"], "")
+            self.assertEqual((output / "attempts" / (value["instance_id"] + ".bm25.json")).read_bytes(), original)
+            event["steps"] = event["steps"][:1]
+            save_attempt(output, event)
+            result = revalidate(output, snapshots, root / "posthoc-valid", root / "inputs.jsonl",
+                                root / "inputs-manifest.json")
+            self.assertEqual(result["arms"]["bm25"]["applicable"], 1)
+            # V3's export audit must use the same opt-in fence policy as its generator.
+            config = json.loads((output / "manifest.json").read_text())
+            config["settings"]["edit_format"] = "exact-replacement-json-fence-v2"
+            (output / "manifest.json").write_text(json.dumps(config))
+            event.update(status="patch", patch=render_edits(response(), snapshot["files"]))
+            save_attempt(output, event)
+            export_predictions(output, [value])
+            verified = audit(output, root / "inputs.jsonl", root / "inputs-manifest.json", snapshots)
+            self.assertEqual(verified["arms"]["bm25"]["counts"]["git_apply_pass"], 1)
+            with self.assertRaises(ValueError):
+                revalidate(output, snapshots, output / "nested", root / "inputs.jsonl",
+                           root / "inputs-manifest.json")
+
+    def test_single_json_fence_is_explicit_and_fail_closed(self):
+        from localcodegraph.structured_edits import parse_edits
+        fence = chr(96) * 3
+        body = response()
+        sources = {"pkg/a.py":"return 1\n"}
+        for wrapper in (fence + "json\n" + body + "\n" + fence,
+                        fence + "\n" + body + "\n" + fence,
+                        " \n" + fence + "json\r\n" + body + "\r\n" + fence + "\n "):
+            with self.subTest(wrapper=wrapper):
+                self.assertEqual(render_edits(wrapper, sources, allow_fence=True),
+                                 render_edits(body, sources))
+                with self.assertRaises(EditError):
+                    render_edits(wrapper, sources)
+        for bad in ("prose\n" + fence + "json\n" + body + "\n" + fence,
+                    fence + "json\n" + body + "\n" + fence + "\nprose",
+                    fence + "json\n" + body,
+                    fence + "json\n" + body + "\n" + fence + "\n" + fence + "json\n{}\n" + fence):
+            with self.subTest(bad=bad), self.assertRaises(EditError):
+                parse_edits(bad, allow_fence=True)
+
+    def test_fence_does_not_bypass_fabricated_path_or_source_checks(self):
+        fence = chr(96) * 3
+        for value in (response(path="package/file.py"), response(old="fabricated example")):
+            with self.subTest(value=value), self.assertRaises(EditError):
+                render_edits(fence + "json\n" + value + "\n" + fence,
+                             {"pkg/a.py":"return 1\n"}, allow_fence=True)
+
+    def test_grounded_prompt_does_not_contain_example_path(self):
+        from localcodegraph.structured_edits import GROUNDED_SYSTEM
+        self.assertNotIn("package/file.py", GROUNDED_SYSTEM)
+        self.assertIn("PRE-FIX SOURCE CONTEXT", GROUNDED_SYSTEM)
+        self.assertIn("Copy path from a source header", GROUNDED_SYSTEM)
 
     def test_output_limit_cannot_be_accepted(self):
         result = validated_generation(lambda f: {"response": '{"edits":[]}', "output_limit":True},

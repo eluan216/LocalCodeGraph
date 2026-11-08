@@ -4,7 +4,7 @@
 
 **Author:** eluan216 — replace with preferred publication name before submission  
 **Affiliation and correspondence:** To be supplied by the author  
-**Draft date:** November 7, 2026  
+**Draft date:** November 8, 2026  
 **Intended venue:** Google – The Gemma 4 Developer Agent Paper Track  
 **Status:** Working resource-paper draft with a completed public-development retrieval study; full test-based repair evaluation and competition integration remain incomplete.
 
@@ -12,7 +12,7 @@
 
 Repository navigation is a practical challenge for local software engineering agents. I present LocalCodeGraph, an offline Python toolkit for combining lexical retrieval, optional dense-vector retrieval and bounded code-graph expansion. The current implementation stores normalized snapshots in SQLite, extracts Python symbols with source locations, and searches identifiers using BM25 with naming-boundary normalization. Context selection combines rank fusion, dependency-weighted expansion, overlapping-source suppression and explicit traversal and output limits. Optional file-hash checks reject stale snippets. A comparison runner evaluates lexical and graph retrieval under matched context limits and retains per-task improvements and regressions.
 
-The release includes code, a command-line interface, tests and a reproducible evaluation protocol. On all 23 public SWE-bench Lite development tasks from six repositories, graph retrieval and the configured BM25 baseline both achieve 47.8% changed-file recall at matched output caps. Exploratory symbol-proxy recall rises from 22.7% to 27.3% on 22 labeled tasks, while median context size and retrieval latency increase. The primary result is a tie; the symbol gain depends on one task. A separate user-run Gemma E2B NF4 pilot completed 46 generations on a Colab T4. Only one exported patch both applied and changed source under an additional audit, so parser acceptance is not treated as repair success. Neither study establishes 31B memory fit or improved repair success. Competition integration and a licensed extended dataset remain planned.
+The release includes code, a command-line interface, tests and a reproducible evaluation protocol. On all 23 public SWE-bench Lite development tasks from six repositories, graph retrieval and the configured BM25 baseline both achieve 47.8% changed-file recall at matched output caps. Exploratory symbol-proxy recall rises from 22.7% to 27.3% on 22 labeled tasks, while median context size and retrieval latency increase. The primary result is a tie; the symbol gain depends on one task. Two Gemma E2B NF4 pilots ran on a Colab T4. In the first, only one exported patch both applied and changed source, and it failed controlled bug tests. In a second structured-edit pilot, strict JSON parsing rejected all 46 attempts across 92 generations. Separately labeled post-hoc revalidation recovered two BM25 candidates: one passed a controlled bug test and all 26 labeled regression tests; the other failed its bug test. No graph candidate survived post-hoc validation. These observations establish neither 31B memory fit nor a graph repair advantage. Competition integration and a licensed extended dataset remain planned.
 
 ## 1. Introduction
 
@@ -132,6 +132,41 @@ The largest saved PyTorch reserved-memory readings were 7.64 GiB for BM25 and 7.
 
 Two issue prefixes were truncated in both arms. No source context required further token-budget truncation. The run demonstrates E2B inference on the user's T4, but no complete official repair score is available. For pydicom-1413, compatibility-adjusted SWE-bench 4.1.0 grading passed the reference fix (3/3 bug tests and 301/301 regression tests) and rejected the unfixed control. The original graph candidate failed all three bug tests while retaining 301 regression passes. All three conditions used pytest 7.4.4 to restore the historical tests' nose-style setup support. This single-case negative result is not a complete 23-task repair score. [T4 artifacts and audit](../evaluation/t4-e2b-nf4-v1/report.md).
 
+### 4.6 Structured-edit v2 and post-hoc test verification
+
+A second run used the same E2B revision and input bundle, asking for exact JSON
+replacements and allowing one validation retry per arm. All 46 attempts used
+both generations. The original strict parser rejected 45 final responses as
+JSON formatting errors and one as an output-limit failure; the original exports
+remain empty. The response strings were unchanged on retry for 42/46 attempts.
+
+After observing this failure, I separately revalidated saved responses on CPU,
+allowing one complete JSON fence while preserving exact-source, path, no-op and
+Git application checks. All source snapshots and input checksums were independently
+reconstructed and matched. Every step is recorded, but exports use only the
+final saved step; this does not select the better retry.
+
+| Outcome | BM25 | Graph |
+| --- | ---: | ---: |
+| Original accepted attempts | 0/23 | 0/23 |
+| Post-hoc applicable candidates | 2/23 | 0/23 |
+| Post-hoc abstentions | 7/23 | 6/23 |
+| Test-verified candidates | 1 | 0 applicable candidates |
+
+Pinned SWE-bench 4.1.0 grading verified pydicom-1694: the candidate passed its
+one FAIL_TO_PASS test and all 26 PASS_TO_PASS tests. The reference fix passed;
+the unchanged-program control failed the bug test and passed all 26 regressions.
+All three used the documented pytest 7.4.4 compatibility pin. The SQLFluff-2419
+candidate added only trailing whitespace and failed its bug test; reference and
+unfixed controls behaved correctly under the unchanged official environment.
+SQLFluff-2419 supplies no PASS_TO_PASS labels.
+
+These are two controlled candidate checks, not a full official repair score.
+The original v2 outcome is unchanged; the successful repair belongs to the
+separately labeled post-hoc interpretation. V2 also has a larger generation
+budget than v1. This already analyzed development set does not establish a graph
+advantage or holdout generalization. [Complete artifacts, protocol and controls](../evaluation/t4-e2b-nf4-v2/report.md).
+
 ## 5. Dataset and Release Scope
 
 The current release contains original code and synthetic fixtures. It does not contain 80 additional repositories, temporal snapshots, real issue–patch trajectories or normalized competition assets.
@@ -146,7 +181,7 @@ Python-only extraction and approximate call resolution limit graph coverage and 
 
 A Gemma E2B NF4 generation pilot has run on a T4, but the project has not established a 31B full-agent memory fit, tool-call reduction, lower peak memory or improved repair success. The observed millisecond retrieval timings apply only to the measured development snapshots and CPU runner.
 
-The present resource needs independent test evaluation and official-data integration. Its current evidence supports a reproducible prototype, a small real-issue retrieval study and an E2B generation/application audit, not a state-of-the-art result.
+The present resource needs independent test evaluation and official-data integration. Its current evidence supports a reproducible prototype, a small real-issue retrieval study and E2B generation/application audits and controlled candidate tests, not a state-of-the-art result.
 
 ## 7. Conclusion
 

@@ -1,6 +1,6 @@
 # LocalCodeGraph
 
-[Revalidate saved v2 responses on CPU before another GPU run](colab/README.md) · [Colab setup and grading instructions](colab/README.md)
+[Read the T4 v2 results and verified repair](evaluation/t4-e2b-nf4-v2/report.md) · [Colab setup and grading instructions](colab/README.md)
 
 **I'm building an offline code-retrieval toolkit that helps local coding agents find useful repository context within a fixed budget.**
 
@@ -105,22 +105,31 @@ I tested the source-changing graph candidate with reference-fix and unfixed cont
 
 [Full T4 results, memory observations, failure analysis and controlled tests](evaluation/t4-e2b-nf4-v1/report.md).
 
-### Next repair experiment
+### Structured-edit v2: one verified BM25 repair after revalidation
 
-I've added a separately labeled v2 controller that asks for exact JSON replacements,
-validates them against pinned source and generates diffs in Python. It allows one
-validation retry and records both responses. A CPU export audit checks actual git
-application before download. V1 remains unchanged.
+I completed all 23 tasks per arm, with two generations each. The original strict
+JSON parser rejected all 46 attempts. I preserved those outcomes, then independently
+revalidated the saved final responses with a single-JSON-fence allowance.
 
-[Run v2 on a free T4](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair_v2.ipynb).
-After finalizing the policy, use the [frozen 12-task repository holdout](benchmarks/repair-holdout-v1.json)
-and [holdout notebook](https://colab.research.google.com/github/eluan216/LocalCodeGraph/blob/main/colab/LocalCodeGraph_Gemma_Repair_Holdout.ipynb).
-The user subsequently reported all 46 v2 attempts ending in errors: 45 JSON-format
-errors and one output limit. The supplied example is fenced JSON and copies the
-schema's example path. These are reported observations; the full raw run has not
-yet been audited. [Revalidate saved outputs on CPU](colab/README.md) before another
-GPU run. A separately labeled v3 prompt removes the example path. No holdout or
-v3 model result is claimed.
+| Post-hoc final outcome | BM25 | Graph |
+| --- | ---: | ---: |
+| Applicable patches | 2 | 0 |
+| Abstentions | 7 | 6 |
+| Validation/generation errors | 14 | 17 |
+
+The pydicom-1694 BM25 candidate passed its bug test and all 26 labeled regression
+tests. The SQLFluff-2419 candidate failed its bug test. Both reference-fix and
+unfixed controls behaved correctly. SQLFluff has no labeled regression tests for
+this task. These are controlled candidate results, not a full official repair score.
+
+[Read the complete v2 report and controls](evaluation/t4-e2b-nf4-v2/report.md).
+This gives me one test-verified E2B repair on a free T4 after post-hoc normalization;
+it does not show a graph advantage. The original v2 exports remain empty.
+
+The separately labeled v3 prompt removes the example path and directs edits to
+pre-fix source headers. It has no GPU result yet. The
+[frozen 12-task holdout](benchmarks/repair-holdout-v1.json) remains reserved until
+the development policy is finalized.
 
 ## Design choices
 

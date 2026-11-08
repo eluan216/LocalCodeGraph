@@ -1,0 +1,1011 @@
+{
+  "protocol": "posthoc-single-json-fence-v1",
+  "scope": "Revalidation only; no generation or test-based repair score. Final saved step only for exports.",
+  "original_manifest_sha256": "456d085f3985d99f4c8a4e7085871613bf26dc1c0072e4ae133a3c7dc2d3a7dd",
+  "planned_per_arm": 23,
+  "arms": {
+    "bm25": {
+      "error: path does not exist in the pinned source snapshot": 1,
+      "error": 14,
+      "abstain": 7,
+      "error: old must be nonempty and replacement must change it": 9,
+      "error: old text does not match exact source": 1,
+      "applicable": 2,
+      "error: original output hit generation limit": 1,
+      "error: return one JSON object without fences or prose": 2
+    },
+    "graph": {
+      "error: path does not exist in the pinned source snapshot": 5,
+      "error": 17,
+      "error: return one JSON object without fences or prose": 4,
+      "abstain": 6,
+      "error: old must be nonempty and replacement must change it": 6,
+      "error: each edit needs only path, old and new": 1,
+      "error: test changes excluded": 1
+    }
+  },
+  "records": [
+    {
+      "instance_id": "marshmallow-code__marshmallow-1343",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "path does not exist in the pinned source snapshot"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "path does not exist in the pinned source snapshot"
+        }
+      ],
+      "original_attempt_sha256": "9222da20d1e6603ebc6f7516be774336c8973ce4e993ba9e37e3f2f54b11ab5e",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1359",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        }
+      ],
+      "original_attempt_sha256": "720de32109706c1f830cc1dd637495b5848d56cec909c62c4724ab1f2c53431e",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "abstain"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1072",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        }
+      ],
+      "original_attempt_sha256": "9cbd93ad63fd1295a34a9da5cd87b291ff303c635e7628a28a6c624dcb19dea4",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "abstain"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1154",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "0607a16c0e1ec9a91210fd8304da2008345af8dae94b92d5802516aa88bbe6f2",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1606",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        }
+      ],
+      "original_attempt_sha256": "f7e25b9916b17e0991510491f1370af3ee11b444371cf45efce128fd040a6ca4",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "abstain"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1707",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "1a9a17d1ccf76c00c6c47241f4e1838f780e4a5d91b3f41ac0aa05da3702784c",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1854",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        }
+      ],
+      "original_attempt_sha256": "595f600d64e207efcb5eedbf3edbb9dba5c4a6629f63c7a9ed01fd0a7c1c53af",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "abstain"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1139",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old text does not match exact source"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old text does not match exact source"
+        }
+      ],
+      "original_attempt_sha256": "0f1d3a21a1bdd0e934b4d33e51b3123f2ae9fc5cc9ee270c474ca8080ab7fce5",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1256",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "35957fe213208a7ffbd6080350b1b83a27c76f8708028e8be15aa9b9e5bd0031",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1413",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "01fdfe8d06a40e8098a59c422a7f6ad6bdb7a31c42cee936b68d07edc48e87eb",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1694",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "applicable"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "applicable"
+        }
+      ],
+      "original_attempt_sha256": "d78d6eedea8bf7937d2cd88a1fdaf1272b590989e552c3703f48b4d7dda1368b",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "applicable"
+    },
+    {
+      "instance_id": "pydicom__pydicom-901",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        }
+      ],
+      "original_attempt_sha256": "199916d5df990a070d60b070276ddeda6fcb83fb75bf3183929a57015ae4fade",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "abstain"
+    },
+    {
+      "instance_id": "pylint-dev__astroid-1196",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "output hit the fixed generation limit; use fewer smaller edits",
+          "status": "error",
+          "error": "original output hit generation limit"
+        },
+        {
+          "index": 1,
+          "original_error": "output hit the fixed generation limit; use fewer smaller edits",
+          "status": "error",
+          "error": "original output hit generation limit"
+        }
+      ],
+      "original_attempt_sha256": "fdfb2898719bde602f83d2b36d9b36df74c85638542697a513f1048cb9e9c914",
+      "original_status": "error",
+      "original_error": "output hit the fixed generation limit; use fewer smaller edits",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pylint-dev__astroid-1268",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "return one JSON object without fences or prose"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "return one JSON object without fences or prose"
+        }
+      ],
+      "original_attempt_sha256": "d1714079af32f2ca613e337dd487528389711c9b48a551250feeabb3126b8b94",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pylint-dev__astroid-1333",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "d29a2866f436293372d7299a25a82be134b8de44373bdb415add07eb07c6e12f",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pylint-dev__astroid-1866",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "b0dbc013bb109efb41b98a0f87a17ab07227c4bde371552bb93fd3033159b0c2",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pylint-dev__astroid-1978",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        }
+      ],
+      "original_attempt_sha256": "40f15f63c206d5d4396593c990128093d42eda3d78f2576c363f5d63f4c6be1e",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "abstain"
+    },
+    {
+      "instance_id": "pyvista__pyvista-4315",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        }
+      ],
+      "original_attempt_sha256": "fe5a5deb65a16c086292eaf3a5b924ed750cfaa98ca713b95c2b81b086961492",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "abstain"
+    },
+    {
+      "instance_id": "sqlfluff__sqlfluff-1517",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "6f568e84887236779321af4a361925f6a409f9f4d6b47eeac6e7b0da56201db2",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "sqlfluff__sqlfluff-1625",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "3ec7762f538628500fbfe5a757101bb85b23937af6c8bb633e705224013c72fa",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "sqlfluff__sqlfluff-1733",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "return one JSON object without fences or prose"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "return one JSON object without fences or prose"
+        }
+      ],
+      "original_attempt_sha256": "5eca4ef570162b67df5f5193fabefb13255f346e313975cb5e43577980507ea5",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "sqlfluff__sqlfluff-1763",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "4028087bcf16e56da56a16ecf120f8c648afaf182b563664c3eca68a3b89e2fb",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "sqlfluff__sqlfluff-2419",
+      "arm": "bm25",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "applicable"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "applicable"
+        }
+      ],
+      "original_attempt_sha256": "b64d19d2364a948206b61f5e5d1e31adea75a2c9bdbcdca93be282a11d14e7ea",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "applicable"
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1343",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "path does not exist in the pinned source snapshot"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "path does not exist in the pinned source snapshot"
+        }
+      ],
+      "original_attempt_sha256": "d1a16e0f68af3d005890c6a919784be6967371820e473df5c23ebce22880a696",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1359",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "return one JSON object without fences or prose"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "return one JSON object without fences or prose"
+        }
+      ],
+      "original_attempt_sha256": "efa5a4d06123deb85c0c384ddbdf1e93d40dd74c84f59a3188e784d8337596a2",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1072",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        }
+      ],
+      "original_attempt_sha256": "ba79b2b934e60af4ab9985cd6a7b41fa561e5a8e8aebaba99d64b1cb69d06978",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "abstain"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1154",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "cd1c07ecfce841cd8d7b40e24815a8adabdcd2b8ce6ffcf4ef030cd84ad518c7",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1606",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        }
+      ],
+      "original_attempt_sha256": "ffb5c0aec10f23ba44f43624fde10f8c7cee7ca01debb0aa0004f4d42449c23b",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "abstain"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1707",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "fa1224a0db8aae48650600a89b0eb057d0f65dc6ae1ee5b3b056bd20fcd83ffe",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1854",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old text does not match exact source"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "each edit needs only path, old and new"
+        }
+      ],
+      "original_attempt_sha256": "7c43877229b1a2d4ded221cdd0b692c3ebf5589f1d037255d8e6cae16fb8ad13",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1139",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "path does not exist in the pinned source snapshot"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "path does not exist in the pinned source snapshot"
+        }
+      ],
+      "original_attempt_sha256": "2c86a203e3cf2c42ab4fadd71c59672b79ea66bdb41115be50d85120da7f2f8b",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1256",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "path does not exist in the pinned source snapshot"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "path does not exist in the pinned source snapshot"
+        }
+      ],
+      "original_attempt_sha256": "e9d9e8f259cffae7ef07479b739bdb65244acd748710dbeaaad8200ae3920d7d",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1413",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        }
+      ],
+      "original_attempt_sha256": "64368ee06f86fd13c4c67a9a94b0f216365b626e0205647b2f3272dd3e26e73c",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "abstain"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1694",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "b4949591b581a3c54844b8b8c62bbb4bc28507adfb769595d0e549e54b34b540",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pydicom__pydicom-901",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "526792e95f547a9bbfe62016f724487c4e293c2e2381f4230895d59dc5114f6a",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pylint-dev__astroid-1196",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "c7d8f84094521af3645fd56b109c8391f4474a199517f0361556319a64582f6c",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pylint-dev__astroid-1268",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "return one JSON object without fences or prose"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "return one JSON object without fences or prose"
+        }
+      ],
+      "original_attempt_sha256": "f2e62abb373bba4180cac806b58bce28debf9873cd32cb03c64dec8c2e13d8fa",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pylint-dev__astroid-1333",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "path does not exist in the pinned source snapshot"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "path does not exist in the pinned source snapshot"
+        }
+      ],
+      "original_attempt_sha256": "175c29533db30c8be53bd8bf29fd782b934c46b68dc6f7389832d2653d14575e",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "pylint-dev__astroid-1866",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        }
+      ],
+      "original_attempt_sha256": "b261f7214ea8951cf3cd7f2aede509a80cd6451a69f6f7175cb613253f1b3e02",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "abstain"
+    },
+    {
+      "instance_id": "pylint-dev__astroid-1978",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        }
+      ],
+      "original_attempt_sha256": "0d978c1b4dab5498bd7e717815b8a6c2a7b17688a1267516d33bc30d478c01fa",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "abstain"
+    },
+    {
+      "instance_id": "pyvista__pyvista-4315",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "abstain"
+        }
+      ],
+      "original_attempt_sha256": "dd71658667213c5fa8d72acaabbefca264d91c119f28e208b90cd32d754bc571",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "abstain"
+    },
+    {
+      "instance_id": "sqlfluff__sqlfluff-1517",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "old must be nonempty and replacement must change it"
+        }
+      ],
+      "original_attempt_sha256": "6baf4a955cd189711f785d623ad28f06a937e628a1b18a8eb6cbd948ab143ec6",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "sqlfluff__sqlfluff-1625",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "return one JSON object without fences or prose"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "return one JSON object without fences or prose"
+        }
+      ],
+      "original_attempt_sha256": "946a116e564d0995938022174fc4ed1e542fc2b11114e93ad7822ed518821afa",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "sqlfluff__sqlfluff-1733",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "test changes excluded"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "test changes excluded"
+        }
+      ],
+      "original_attempt_sha256": "fe1a6521605315edf857e9370ee5dd16b8f1971ff73a38f0d5b2d36679ade0cc",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "sqlfluff__sqlfluff-1763",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "path does not exist in the pinned source snapshot"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "path does not exist in the pinned source snapshot"
+        }
+      ],
+      "original_attempt_sha256": "4d50fc41a2a62c3d205cd449a98ba56a22c9ab5e5324dd244a2acf081218c2a5",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    },
+    {
+      "instance_id": "sqlfluff__sqlfluff-2419",
+      "arm": "graph",
+      "steps": [
+        {
+          "index": 0,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "return one JSON object without fences or prose"
+        },
+        {
+          "index": 1,
+          "original_error": "return one JSON object without fences or prose",
+          "status": "error",
+          "error": "return one JSON object without fences or prose"
+        }
+      ],
+      "original_attempt_sha256": "6a5be316fe53f2c0e1359f61a91695680414016efb2c95883168318d6abea9b5",
+      "original_status": "error",
+      "original_error": "return one JSON object without fences or prose",
+      "final_status": "error"
+    }
+  ]
+}

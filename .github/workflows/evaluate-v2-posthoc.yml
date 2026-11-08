@@ -1,0 +1,67 @@
+name: evaluate-v2-posthoc
+on:
+  pull_request:
+    paths:
+      - 'evaluation/t4-e2b-nf4-v2/**'
+      - 'benchmarks/grade_t4_posthoc_case.py'
+      - '.github/workflows/evaluate-v2-posthoc.yml'
+permissions:
+  contents: read
+jobs:
+  revalidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . pyarrow==26.0.1
+      - run: python benchmarks/prepare_repair_inputs.py --output-dir evaluation-inputs
+      - run: python benchmarks/prepare_edit_snapshots.py --inputs evaluation-inputs/inputs.jsonl --manifest evaluation-inputs/manifest.json --output-dir evaluation-sources
+      - run: python benchmarks/revalidate_structured_run.py --run-dir evaluation/t4-e2b-nf4-v2/original --inputs evaluation-inputs/inputs.jsonl --manifest evaluation-inputs/manifest.json --source-dir evaluation-sources --output-dir posthoc-results
+      - name: Verify frozen candidate set
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("posthoc-results/report.json").read_text())
+          candidates = {(r["instance_id"],r["arm"]) for r in report["records"] if r["final_status"] == "applicable"}
+          assert candidates == {("pydicom__pydicom-1694","bm25"),("sqlfluff__sqlfluff-2419","bm25")}, candidates
+          print("LCG_V2_REVALIDATION_JSON=" + json.dumps(report))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v2-posthoc-revalidation
+          path: |
+            posthoc-results/
+            evaluation-inputs/manifest.json
+            evaluation-sources/manifest.json
+  controlled-grading:
+    needs: revalidate
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        instance: ['pydicom__pydicom-1694', 'sqlfluff__sqlfluff-2419']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: v2-posthoc-revalidation
+          path: replay-artifact
+      - run: python -m pip install swebench==4.1.0 pyarrow==26.0.1
+      - run: docker version
+      - run: python benchmarks/grade_t4_posthoc_case.py --instance ${{ matrix.instance }} --input-dir replay-artifact/posthoc-results --output-dir grading-results
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v2-controls-${{ matrix.instance }}
+          path: |
+            grading-results/
+            logs/

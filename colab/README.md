@@ -1,9 +1,18 @@
-# Diagnose the completed v2 run before another GPU experiment
+# T4 v2 evaluated: one post-hoc test-verified BM25 repair
 
-The user reports 46/46 final errors: 45 rejected as JSON formatting and one output
-limit. The supplied response is valid JSON inside a code fence, but also uses the
-prompt's illustrative package/file.py path. Unwrapping the fence alone does not
-make that edit valid. Raw files have not yet been audited as a complete run.
+The completed v2 run and saved responses have now been independently audited.
+Original strict parsing rejected all 46 attempts across 92 generations.
+Separate final-step-only revalidation recovered two BM25 candidates and no
+graph candidates. Pydicom-1694 passed its bug test and all 26 labeled regression
+tests; SQLFluff-2419 failed its bug test. Both reference-fix and unfixed controls
+behaved correctly. These are controlled candidate results, not a full official
+repair score or a graph advantage.
+
+[Read the complete results and machine-readable controls](../evaluation/t4-e2b-nf4-v2/report.md).
+
+The commands below reproduce CPU revalidation. You do not need to repeat them
+if your report already matches the published results. V3 and the reserved holdout
+have no model results yet; keep their runs separate from v2.
 
 ## CPU-only revalidation
 

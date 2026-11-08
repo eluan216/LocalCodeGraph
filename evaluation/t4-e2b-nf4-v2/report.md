@@ -51,6 +51,8 @@ and ordinary Git application checks. Runtime failures and original output limits
 remain errors. Every saved step is examined, but only the final step is exported;
 an earlier valid response is never selected over a failed final retry.
 
+The normalization rule was implemented in commit 85435c1a50bf6c7714782b9b23cf8104925e5439 before controlled grading. The workflow asserted the exact two-candidate set before starting test jobs.
+
 This changes interpretation of saved outputs, not the original v2 outcome.
 It does not regenerate responses or use reference fixes during validation.
 

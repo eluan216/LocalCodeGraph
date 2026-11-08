@@ -160,6 +160,15 @@ class EditTests(unittest.TestCase):
             result = revalidate(output, snapshots, root / "posthoc-valid", root / "inputs.jsonl",
                                 root / "inputs-manifest.json")
             self.assertEqual(result["arms"]["bm25"]["applicable"], 1)
+            # V3's export audit must use the same opt-in fence policy as its generator.
+            config = json.loads((output / "manifest.json").read_text())
+            config["settings"]["edit_format"] = "exact-replacement-json-fence-v2"
+            (output / "manifest.json").write_text(json.dumps(config))
+            event.update(status="patch", patch=render_edits(response(), snapshot["files"]))
+            save_attempt(output, event)
+            export_predictions(output, [value])
+            verified = audit(output, root / "inputs.jsonl", root / "inputs-manifest.json", snapshots)
+            self.assertEqual(verified["arms"]["bm25"]["counts"]["git_apply_pass"], 1)
             with self.assertRaises(ValueError):
                 revalidate(output, snapshots, output / "nested", root / "inputs.jsonl",
                            root / "inputs-manifest.json")

@@ -7,7 +7,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 from localcodegraph.repair_t4 import load_records
-from localcodegraph.structured_edits import load_snapshot, render_edits
+from localcodegraph.structured_edits import load_snapshot, render_edits, parse_edits
 
 def audit(output, inputs, manifest, source_dir):
     output = Path(output)
@@ -40,12 +40,13 @@ def audit(output, inputs, manifest, source_dir):
                 sources, digest = load_snapshot(source_dir, record)
                 if digest != config["snapshot_sha256"][record["instance_id"]]:
                     raise ValueError("snapshot checksum differs")
-                reproduced = render_edits(steps[-1]["response"], sources)
+                allow_fence = config["settings"].get("edit_format") == "exact-replacement-json-fence-v2"
+                reproduced = render_edits(steps[-1]["response"], sources, allow_fence=allow_fence)
                 if reproduced != event["patch"]:
                     raise ValueError("exported patch does not match accepted response")
                 with tempfile.TemporaryDirectory() as directory:
                     root = Path(directory)
-                    edits = json.loads(steps[-1]["response"])["edits"]
+                    edits = parse_edits(steps[-1]["response"], allow_fence=allow_fence)
                     for name in {e["path"] for e in edits}:
                         target = root / name
                         target.parent.mkdir(parents=True, exist_ok=True)

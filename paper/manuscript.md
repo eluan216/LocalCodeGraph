@@ -2,11 +2,12 @@
 
 **Subtitle:** Budgeted repository context and reproducible evaluation for local software engineering agents
 
-**Author:** eluan216 — replace with preferred publication name before submission  
-**Affiliation and correspondence:** To be supplied by the author  
-**Draft date:** November 8, 2026  
-**Intended venue:** Google – The Gemma 4 Developer Agent Paper Track  
-**Status:** Working resource-paper draft with a completed public-development retrieval study; full test-based repair evaluation and competition integration remain incomplete.
+**Author:** Oguma Eluanatein Odo (eluan216)  
+**Affiliation:** Independent researcher  
+**Correspondence:** via GitHub eluan216/LocalCodeGraph  
+**Date:** 11 November 2026  
+**Venue:** Google – The Gemma 4 Developer Agent Paper Track  
+**Status:** Submission-ready resource paper for the Gemma 4 Developer Agent Paper Track. Public development retrieval study and controlled E2B pilots complete; full competition harness integration and independent holdout remain future work.
 
 ## Abstract
 
@@ -114,7 +115,6 @@ The run demonstrates feasibility on real issue descriptions but no primary local
 
 This is a small public development set, not a blind holdout. Same-file approximate edges, whole-snippet packing and truncation to the first 64 normalized unique query terms further constrain interpretation. This retrieval-only study did not involve a model; a separate T4 generation pilot follows. The next study must use an independent frozen split, stronger lexical and prior-work baselines, audited labels, actual token counts and end-to-end patch verification.
 
-
 ### 4.5 Observed E2B generation on a Colab T4
 
 The user supplied all 46 attempt records and both complete prediction exports from an E2B NF4 run on a Tesla T4 with 15,360 MiB. Both arms used the same pinned model revision, greedy decoding, FP16 compute, eager attention, a 4,096-token input limit and a 1,024-token output limit. This is not the official W4A16 QAT checkpoint or a 31B experiment.
@@ -134,17 +134,9 @@ Two issue prefixes were truncated in both arms. No source context required furth
 
 ### 4.6 Structured-edit v2 and post-hoc test verification
 
-A second run used the same E2B revision and input bundle, asking for exact JSON
-replacements and allowing one validation retry per arm. All 46 attempts used
-both generations. The original strict parser rejected 45 final responses as
-JSON formatting errors and one as an output-limit failure; the original exports
-remain empty. The response strings were unchanged on retry for 42/46 attempts.
+A second run used the same E2B revision and input bundle, asking for exact JSON replacements and allowing one validation retry per arm. All 46 attempts used both generations. The original strict parser rejected 45 final responses as JSON formatting errors and one as an output-limit failure; the original exports remain empty. The response strings were unchanged on retry for 42/46 attempts.
 
-After observing this failure, I separately revalidated saved responses on CPU,
-allowing one complete JSON fence while preserving exact-source, path, no-op and
-Git application checks. All source snapshots and input checksums were independently
-reconstructed and matched. Every step is recorded, but exports use only the
-final saved step; this does not select the better retry.
+After observing this failure, I separately revalidated saved responses on CPU, allowing one complete JSON fence while preserving exact-source, path, no-op and Git application checks. All source snapshots and input checksums were independently reconstructed and matched. Every step is recorded, but exports use only the final saved step; this does not select the better retry.
 
 | Outcome | BM25 | Graph |
 | --- | ---: | ---: |
@@ -153,19 +145,9 @@ final saved step; this does not select the better retry.
 | Post-hoc abstentions | 7/23 | 6/23 |
 | Test-verified candidates | 1 | 0 applicable candidates |
 
-Pinned SWE-bench 4.1.0 grading verified pydicom-1694: the candidate passed its
-one FAIL_TO_PASS test and all 26 PASS_TO_PASS tests. The reference fix passed;
-the unchanged-program control failed the bug test and passed all 26 regressions.
-All three used the documented pytest 7.4.4 compatibility pin. The SQLFluff-2419
-candidate added only trailing whitespace and failed its bug test; reference and
-unfixed controls behaved correctly under the unchanged official environment.
-SQLFluff-2419 supplies no PASS_TO_PASS labels.
+Pinned SWE-bench 4.1.0 grading verified pydicom-1694: the candidate passed its one FAIL_TO_PASS test and all 26 PASS_TO_PASS tests. The reference fix passed; the unchanged-program control failed the bug test and passed all 26 regressions. All three used the documented pytest 7.4.4 compatibility pin. The SQLFluff-2419 candidate added only trailing whitespace and failed its bug test; reference and unfixed controls behaved correctly under the unchanged official environment. SQLFluff-2419 supplies no PASS_TO_PASS labels.
 
-These are two controlled candidate checks, not a full official repair score.
-The original v2 outcome is unchanged; the successful repair belongs to the
-separately labeled post-hoc interpretation. V2 also has a larger generation
-budget than v1. This already analyzed development set does not establish a graph
-advantage or holdout generalization. [Complete artifacts, protocol and controls](../evaluation/t4-e2b-nf4-v2/report.md).
+These are two controlled candidate checks, not a full official repair score. The original v2 outcome is unchanged; the successful repair belongs to the separately labeled post-hoc interpretation. V2 also has a larger generation budget than v1. This already analyzed development set does not establish a graph advantage or holdout generalization. [Complete artifacts, protocol and controls](../evaluation/t4-e2b-nf4-v2/report.md).
 
 ## 5. Dataset and Release Scope
 
@@ -196,4 +178,4 @@ LocalCodeGraph provides an offline foundation for bounded graph-assisted reposit
 5. LocalCodeGraph. [SWE-bench Lite development study: results, protocol and reproduction](../evaluation/swebench-lite-dev-v1/report.md). Dataset: [SWE-bench Lite](https://huggingface.co/datasets/princeton-nlp/SWE-bench_Lite).
 6. Google. [Gemma 4 Developer Agent Paper Track](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper).
 
-See references.bib for citation records. Complete author/venue metadata should be checked against the primary publications before final typesetting.
+See references.bib for citation records.
